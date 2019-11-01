@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/currentTap"
+          android:title="@string/current"
+          android:icon="@drawable/icon_current"/>
+
+    <item android:id="@+id/hourlyTap"
+          android:title="@string/hourly"
+          android:icon="@drawable/icon_sun"/>
+
+    <item android:id="@+id/dailyTap"
+          android:title="@string/daily"
+          android:icon="@drawable/icon_daily"/>
+
+    <item android:id="@+id/alertTap"
+          android:title="@string/alert"
+          android:icon="@drawable/icon_alert"/>
+</menu>
