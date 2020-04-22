@@ -15,13 +15,13 @@ import com.mando.myweather.fragments.Current
 import com.mando.myweather.fragments.Daily
 import com.mando.myweather.fragments.Hourly
 import com.mando.myweather.impl.ForecastUrlImpl
+import com.mando.myweather.impl.NetworkImpl
 import com.mando.myweather.impl.OkHttpClientImpl
 import com.mando.myweather.location.FusedLocationDataStore
 import com.mando.myweather.location.LocationDataStore
 import com.mando.myweather.tabs.MainScreenTab
 import com.mando.myweather.utils.AndroidPermissionChecker
 import com.mando.myweather.utils.PermissionChecker
-import okhttp3.OkHttpClient
 
 
 private const val TAG = "MainActivity"
@@ -44,8 +44,9 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View {
         val location = locationDataStore.location
         if (location != null){
             val forecastUrl = ForecastUrlImpl(location)
-            val okHttpClient = OkHttpClientImpl(application, forecastUrl)
-            okHttpClient.run()
+            val isNetworkAvailable = NetworkImpl(applicationContext).isNetworkAvailable
+            val okHttpClient = OkHttpClientImpl(application, forecastUrl, isNetworkAvailable)
+            okHttpClient.shouldRequest()
         }
 
     }

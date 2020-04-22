@@ -4,5 +4,5 @@ import android.content.Context
 
 interface Network {
 
-    fun isNetworkAvailable(context: Context): Boolean
+    val isNetworkAvailable: Boolean
 }
