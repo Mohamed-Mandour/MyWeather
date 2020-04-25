@@ -16,19 +16,22 @@ import com.mando.myweather.fragments.Alert
 import com.mando.myweather.fragments.CurrentFragment
 import com.mando.myweather.fragments.Daily
 import com.mando.myweather.fragments.Hourly
+import com.mando.myweather.location.FusedLocationDataStore
+import com.mando.myweather.location.LocationDataStore
 import com.mando.myweather.tabs.MainScreenTab
+import com.mando.myweather.utils.AndroidPermissionChecker
 import com.mando.myweather.utils.PermissionChecker
-import com.mando.myweather.utils.PermissionCheckerImpl
 
+
+private const val TAG = "MainActivity"
+private const val LOCATION_REQUEST_CODE = 99
 class MainActivity : AppCompatActivity(), MainScreenTab.View {
-
-    private val TAG = "MainActivity"
-    private val LOCATION_REQUEST_CODE = 99
-    private var permissionChecker: PermissionChecker? = null
 
     private lateinit var toolbar: ActionBar
     private var forecastJsonTask: AsyncTask<String, String, String>? = null
     private var bottomNavigation: BottomNavigationView? = null
+    private  val locationDataStore: LocationDataStore?
+        get() = FusedLocationDataStore.getInstance(application)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +50,6 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View {
     private fun initialization() {
         bottomNavigation = findViewById(R.id.navigationView)
         bottomNavigation?.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        permissionChecker = PermissionCheckerImpl(applicationContext)
     }
 
     private val mOnNavigationItemSelectedListener =
@@ -103,9 +105,10 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View {
     }
 
     private fun requestLocationPermission() {
-        val hasAnyLocationPermissions = permissionChecker?.hasAnyLocationPermissions()
+        val permissionChecker: PermissionChecker = AndroidPermissionChecker(application)
+        val hasAnyLocationPermissions = permissionChecker.hasAnyLocationPermissions
         Log.d(TAG, "hasAnyLocationPermissions: $hasAnyLocationPermissions")
-        if (hasAnyLocationPermissions != null && !hasAnyLocationPermissions) {
+        if (!hasAnyLocationPermissions) {
             makeLocationPermissionRequest()
         }
         if (ActivityCompat.shouldShowRequestPermissionRationale(
@@ -127,7 +130,7 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View {
 
         builder.setPositiveButton(
             "OK"
-        ) { dialog, id ->
+        ) { _, _ ->
             Log.i(TAG, "Clicked")
             makeLocationPermissionRequest()
         }
@@ -161,11 +164,7 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    Toast.makeText(
-                        applicationContext,
-                        "Permission has been granted",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    locationDataStore?.location
                 }
             }
         }

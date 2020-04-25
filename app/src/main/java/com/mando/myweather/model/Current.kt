@@ -32,5 +32,4 @@ class Current {
             val dateTime = Date(time * 1000)
             return formatter.format(dateTime)
         }
-
 }
