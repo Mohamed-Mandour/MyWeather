@@ -1,47 +1,55 @@
 package com.mando.myweather.model
 
-import org.json.JSONObject
+import com.mando.myweather.R
 
-private const val TIMEZONE = "timezone"
-private const val CURRENTLY = "currently"
-private const val ICON = "icon"
-private const val TIME = "time"
-private const val SUMMARY = "summary"
-private const val TEMPERATURE = "apparentTemperature"
-private const val HUMIDITY = "humidity"
-private const val PRESSURE = "pressure"
-private const val WINDSPEED = "windSpeed"
-private const val VISIBILITY = "visibility"
-private const val PRECIPPROBABILITY = "precipProbability"
 
 private const val TAG = "Forecast"
 
-class Forecast(private val forecastJson: String?) {
+class Forecast() {
+    private var current: Current? = null
 
-    fun setCurrent(): Current? {
-        val forecast = JSONObject(forecastJson)
-        val timezone: String = forecast.getString(TIMEZONE)
-        val currently: JSONObject = forecast.getJSONObject(CURRENTLY)
-        val icon = currently.getString(ICON)
-        val time = currently.getLong(TIME)
-        val summary = currently.getString(SUMMARY)
-        val temperature = currently.getString(TEMPERATURE)
-        val humidity = currently.getDouble(HUMIDITY)
-        val pressure = currently.getDouble(PRESSURE)
-        val windSpeed = currently.getDouble(WINDSPEED)
-        val visibility = currently.getDouble(VISIBILITY)
-        val precipProbability = currently.getDouble(PRECIPPROBABILITY)
-        return Current(
-            timezone,
-            icon,
-            time,
-            summary,
-            temperature,
-            humidity,
-            pressure,
-            windSpeed,
-            visibility,
-            precipProbability
-        )
+    fun getCurrent(): Current? {
+        return current
+    }
+
+    fun setCurrent(mapCurrent: Current?) {
+        current = mapCurrent
+    }
+
+    fun getIconId(iconString: String): Int {
+        var iconId: Int = R.drawable.clear_day
+        when (iconString) {
+            "clear-day" -> {
+                iconId = R.drawable.clear_day
+            }
+            "clear-night" -> {
+                iconId = R.drawable.clear_night
+            }
+            "rain" -> {
+                iconId = R.drawable.rain
+            }
+            "snow" -> {
+                iconId = R.drawable.snow
+            }
+            "sleet" -> {
+                iconId = R.drawable.sleet
+            }
+            "wind" -> {
+                iconId = R.drawable.wind
+            }
+            "fog" -> {
+                iconId = R.drawable.fog
+            }
+            "cloudy" -> {
+                iconId = R.drawable.cloudy
+            }
+            "partly-cloudy-day" -> {
+                iconId = R.drawable.partly_cloudy
+            }
+            "partly-cloudy-night" -> {
+                iconId = R.drawable.cloudy_night
+            }
+        }
+        return iconId
     }
 }
