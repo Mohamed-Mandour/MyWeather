@@ -3,6 +3,7 @@ package com.mando.myweather
 import android.app.AlertDialog
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -10,8 +11,9 @@ import androidx.appcompat.app.ActionBar
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mando.myweather.background.ForecastJsonTask
 import com.mando.myweather.fragments.Alert
-import com.mando.myweather.fragments.Current
+import com.mando.myweather.fragments.CurrentFragment
 import com.mando.myweather.fragments.Daily
 import com.mando.myweather.fragments.Hourly
 import com.mando.myweather.tabs.MainScreenTab
@@ -24,7 +26,8 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View {
     private val LOCATION_REQUEST_CODE = 99
     private var permissionChecker: PermissionChecker? = null
 
-    lateinit var toolbar: ActionBar
+    private lateinit var toolbar: ActionBar
+    private var forecastJsonTask: AsyncTask<String, String, String>? = null
     private var bottomNavigation: BottomNavigationView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +37,11 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View {
         initialization()
         showCurrentFragment()
         requestLocationPermission()
+        forecastJsonTask = ForecastJsonTask(application).execute()
+        val get = (forecastJsonTask as AsyncTask<String, String, String>?)?.get()
+        Log.i(TAG, "get $get")
+
+        showCurrentFragment()
     }
 
     private fun initialization() {
@@ -68,7 +76,7 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View {
         }
 
     override fun showCurrentFragment() {
-        val currentFragment = Current.newInstance()
+        val currentFragment = CurrentFragment.newInstance()
         openFragment(currentFragment)
 
     }
@@ -90,7 +98,7 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View {
 
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.bottomNavContainer, fragment)
+        transaction.replace(R.id.fragmentFrame, fragment)
         transaction.commit()
     }
 
