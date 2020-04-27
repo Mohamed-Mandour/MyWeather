@@ -20,7 +20,7 @@ import com.mando.myweather.location.FusedLocationDataStore
 import com.mando.myweather.location.LocationDataStore
 import com.mando.myweather.tabs.MainScreenTab
 import com.mando.myweather.utils.AndroidPermissionChecker
-import com.mando.myweather.utils.PermissionChecker
+import com.mando.myweather.utils.PermissionExaminer
 
 
 private const val TAG = "MainActivity"
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View, ForecastJsonTask.O
     }
 
     private fun requestLocationPermission() {
-        val permissionChecker: PermissionChecker = AndroidPermissionChecker(application)
+        val permissionChecker: PermissionExaminer = AndroidPermissionChecker(application)
         val hasAnyLocationPermissions = permissionChecker.hasAnyLocationPermissions
         Log.d(TAG, "hasAnyLocationPermissions: $hasAnyLocationPermissions")
         if (!hasAnyLocationPermissions) {

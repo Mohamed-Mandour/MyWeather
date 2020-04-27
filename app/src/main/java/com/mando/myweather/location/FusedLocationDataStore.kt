@@ -9,6 +9,8 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.mando.myweather.utils.AndroidPermissionChecker
+import com.mando.myweather.utils.PermissionExaminer
 import java.util.concurrent.CopyOnWriteArrayList
 
 const val TAG = "FusedLocationDataStore"
@@ -18,11 +20,13 @@ object FusedLocationDataStore : LocationDataStore {
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var mLocationCallback: LocationCallback? = null
     private var mLocation: DeviceLocation? = null
+    private var mPermissionExaminer: PermissionExaminer? = null
     private val mListeners = CopyOnWriteArrayList<LocationDataStoreListener>()
 
 
-    fun initialize(context: Context?) {
+    private fun initialize(context: Context?) {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
+        mPermissionExaminer = AndroidPermissionChecker(context)
         initLocationCallback()
         updateLastLocation()
     }
@@ -67,10 +71,10 @@ object FusedLocationDataStore : LocationDataStore {
                     " From thread: " + Thread.currentThread().id +
                     " isMainThread [" + (Looper.myLooper() == Looper.getMainLooper()) + "]"
         )
-//        if (!permissionChecker.getHasAnyLocationPermissions()) {
-//            Log.d(TAG, "No Location permission granted")
-//            return
-//        }
+        if (mPermissionExaminer?.hasAnyLocationPermissions == false) {
+            Log.d(TAG, "No Location permission granted")
+            return
+        }
         val lastLocationTask =
             mFusedLocationClient!!.lastLocation
         lastLocationTask.addOnCompleteListener {

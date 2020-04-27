@@ -1,6 +1,6 @@
 package com.mando.myweather.utils
 
-interface PermissionChecker {
+interface PermissionExaminer {
     val hasAnyLocationPermissions: Boolean
 
     val hasFineLocationPermission: Boolean
