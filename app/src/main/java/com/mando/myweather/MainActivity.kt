@@ -20,12 +20,12 @@ import com.mando.myweather.location.FusedLocationDataStore
 import com.mando.myweather.location.LocationDataStore
 import com.mando.myweather.tabs.MainScreenTab
 import com.mando.myweather.utils.AndroidPermissionChecker
-import com.mando.myweather.utils.PermissionChecker
+import com.mando.myweather.utils.PermissionExaminer
 
 
 private const val TAG = "MainActivity"
 private const val LOCATION_REQUEST_CODE = 99
-class MainActivity : AppCompatActivity(), MainScreenTab.View {
+class MainActivity : AppCompatActivity(), MainScreenTab.View, ForecastJsonTask.OnForecastJsonReady {
 
     private lateinit var toolbar: ActionBar
     private var forecastJsonTask: AsyncTask<String, String, String>? = null
@@ -40,11 +40,12 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View {
         initialization()
         showCurrentFragment()
         requestLocationPermission()
-        forecastJsonTask = ForecastJsonTask(application).execute()
-        val get = (forecastJsonTask as AsyncTask<String, String, String>?)?.get()
-        Log.i(TAG, "get $get")
-
+        forecastJsonTask = ForecastJsonTask(application, this).execute()
         showCurrentFragment()
+    }
+
+    override fun getForecastJson(forecastJson: String?) {
+        Log.d(TAG, "forecastJson: $forecastJson")
     }
 
     private fun initialization() {
@@ -105,7 +106,7 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View {
     }
 
     private fun requestLocationPermission() {
-        val permissionChecker: PermissionChecker = AndroidPermissionChecker(application)
+        val permissionChecker: PermissionExaminer = AndroidPermissionChecker(application)
         val hasAnyLocationPermissions = permissionChecker.hasAnyLocationPermissions
         Log.d(TAG, "hasAnyLocationPermissions: $hasAnyLocationPermissions")
         if (!hasAnyLocationPermissions) {

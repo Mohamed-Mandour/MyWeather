@@ -8,7 +8,7 @@ import android.util.Log
 
 private const val TAG = "PermissionCheckerImpl"
 
-class AndroidPermissionChecker(private val context: Context?) : PermissionChecker {
+class AndroidPermissionChecker(private val context: Context?) : PermissionExaminer {
 
     override val hasAnyLocationPermissions: Boolean
         get() {

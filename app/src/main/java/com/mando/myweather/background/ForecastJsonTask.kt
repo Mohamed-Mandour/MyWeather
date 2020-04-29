@@ -12,7 +12,9 @@ import okhttp3.Response
 import org.json.JSONException
 import org.json.JSONObject
 private const val TAG = "ForecastJsonTask"
-class ForecastJsonTask (private val context: Context): AsyncTask<String, String, String>() {
+class ForecastJsonTask (
+    private val context: Context,
+    private val onForecastJsonReady: OnForecastJsonReady): AsyncTask<String, String, String>() {
 
     private  val locationDataStore: LocationDataStore?
         get() = FusedLocationDataStore.getInstance(context)
@@ -35,5 +37,15 @@ class ForecastJsonTask (private val context: Context): AsyncTask<String, String,
             }
         }
         return forecastJson
+    }
+
+    override fun onPostExecute(forecastJson: String?) {
+        super.onPostExecute(forecastJson)
+        onForecastJsonReady.getForecastJson(forecastJson)
+    }
+
+    interface OnForecastJsonReady{
+
+        fun getForecastJson(forecastJson: String?)
     }
 }
