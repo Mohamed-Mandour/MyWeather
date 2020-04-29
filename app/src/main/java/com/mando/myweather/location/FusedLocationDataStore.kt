@@ -5,55 +5,37 @@ import android.content.Context
 import android.os.Looper
 import android.util.Log
 import androidx.annotation.VisibleForTesting
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.mando.myweather.utils.AndroidPermissionChecker
 import com.mando.myweather.utils.PermissionExaminer
-import java.util.concurrent.CopyOnWriteArrayList
-
+private const val DEFAULT_INTERVAL = 0L
 const val TAG = "FusedLocationDataStore"
 
 object FusedLocationDataStore : LocationDataStore {
 
     private var mFusedLocationClient: FusedLocationProviderClient? = null
-    private var mLocationCallback: LocationCallback? = null
     private var mLocation: DeviceLocation? = null
     private var mPermissionExaminer: PermissionExaminer? = null
-    private val mListeners = CopyOnWriteArrayList<LocationDataStoreListener>()
 
+    private val locationCallback = object : LocationCallback() {
 
-    private fun initialize(context: Context?) {
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
-        mPermissionExaminer = AndroidPermissionChecker(context)
-        initLocationCallback()
-        updateLastLocation()
+        override fun onLocationResult(locationResult: LocationResult?) {
+            Log.w(TAG, "onLocationResult($locationResult)")
+
+            if (locationResult == null || locationResult.lastLocation == null) {
+                Log.w(TAG, "Location is null. Returning")
+                return
+            }
+            mLocation = DeviceLocation(locationResult.lastLocation)
+        }
     }
 
-    private fun initLocationCallback() {
-        mLocationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                Log.i(
-                    TAG,
-                    "onLocationResult() called with: locationResult = [$locationResult] From thread: " + Thread.currentThread()
-                        .id + " isMainThread [" + (Looper.myLooper() == Looper.getMainLooper()) + "]"
-                )
-                if (locationResult == null) {
-                    Log.w(
-                        TAG,
-                        "onLocationResult() received invalid locationResult: [$locationResult]"
-                    )
-                    return
-                }
-                mLocation = DeviceLocation(locationResult.lastLocation)
-                Log.i(
-                    TAG,
-                    "onLocationResult() called with: location = [$mLocation]"
-                )
-                dispatchLocationChanged()
-            }
-        }
+    private fun initialize(context: Context?) {
+        Log.d(TAG, "initialize($context)")
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
+        mPermissionExaminer = AndroidPermissionChecker(context)
+        requestNewLocation()
+        updateLastLocation()
     }
 
     override val location: DeviceLocation?
@@ -62,6 +44,40 @@ object FusedLocationDataStore : LocationDataStore {
             Log.d(TAG, "getLocation() returned: $mLocation")
             return mLocation
         }
+
+    override fun requestNewLocation() {
+        if (mPermissionExaminer?.hasAnyLocationPermissions == false) {
+            Log.w(TAG, "Cannot request a new location as we don't have permission.")
+            return
+        }
+
+        val request = createLocationRequest()
+        mFusedLocationClient?.requestLocationUpdates(
+            request,
+            locationCallback,
+            Looper.getMainLooper()
+        )
+    }
+    private fun createLocationRequest() = when (mPermissionExaminer?.hasFineLocationPermission) {
+        true -> createSingleLocationRequestHighAccuracy()
+        else -> createSingleLocationRequestBalancedPower()
+    }
+    private fun createSingleLocationRequestHighAccuracy() =
+        createLocationRequest(LocationRequest.PRIORITY_HIGH_ACCURACY)
+
+    private fun createSingleLocationRequestBalancedPower() =
+        createLocationRequest(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
+
+    private fun createLocationRequest(requestPriority: Int): LocationRequest {
+        val locationUpdateInterval =  DEFAULT_INTERVAL
+        val locationUpdateFastestInterval =  DEFAULT_INTERVAL
+
+        return LocationRequest().apply {
+            interval = locationUpdateInterval
+            fastestInterval = locationUpdateFastestInterval
+            priority = requestPriority
+        }
+    }
 
     @SuppressLint("MissingPermission")
     @VisibleForTesting
@@ -86,13 +102,6 @@ object FusedLocationDataStore : LocationDataStore {
             } else {
                 Log.d(TAG, "Location is null")
             }
-        }
-    }
-
-    @VisibleForTesting
-    fun dispatchLocationChanged() {
-        for (listener in mListeners) {
-            listener.onLocationChanged(mLocation)
         }
     }
 
