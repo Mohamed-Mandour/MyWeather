@@ -34,7 +34,6 @@ object FusedLocationDataStore : LocationDataStore {
         Log.d(TAG, "initialize($context)")
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
         mPermissionExaminer = AndroidPermissionChecker(context)
-        requestNewLocation()
         updateLastLocation()
     }
 

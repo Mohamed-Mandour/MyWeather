@@ -23,9 +23,9 @@ class ForecastJsonTask (
 
         var forecastJson: String? = null
         val location = locationDataStore?.location
-        if (location != null){
-            val forecastUrl = ForecastUrlImpl(location)
+            val forecastUrl = ForecastUrlImpl()
             val request: Request = Request.Builder().url(forecastUrl.darkSkyForecastUrl).build()
+            Log.d(TAG, "forecastJson $forecastJson")
 
             try {
                 val response: Response = OkHttpClient(context).getHTTPClient()!!.newCall(request).execute()
@@ -35,7 +35,7 @@ class ForecastJsonTask (
             }catch (e: JSONException){
                 Log.e(TAG, "JSONException ${e.message}")
             }
-        }
+
         return forecastJson
     }
 
