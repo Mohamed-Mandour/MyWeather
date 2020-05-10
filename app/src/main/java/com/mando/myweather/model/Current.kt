@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 class Current() : Parcelable {
 
@@ -34,6 +35,10 @@ class Current() : Parcelable {
             val dateTime = Date(time * 1000)
             return formatter.format(dateTime)
         }
+
+    fun getTemperture(): Int {
+        return (temperature.toDouble() - 32).roundToInt().toInt() * 5 / 9
+    }
 
     constructor(parcel: Parcel) : this() {
         timezone = parcel.readString().toString()

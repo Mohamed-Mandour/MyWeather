@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -8,7 +7,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <dimen name="small_margin">8dp</dimen>
-    <dimen name="standard_margin">16dp</dimen>
-    <dimen name="large_margin">32dp</dimen>
+    <style name="Background">
+        <item name="android:background">@color/bg_color</item>
+        <item name="android:textColor">@color/orange</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textColor">@color/orange</item>
+        <item name="android:textSize">23sp</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/fade</item>
+    </style>
 </resources>

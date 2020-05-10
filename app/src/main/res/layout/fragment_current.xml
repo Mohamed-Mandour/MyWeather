@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@color/button_nav_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        style="@style/Background"
         tools:context=".fragments.CurrentFragment">
 
     <ImageView
@@ -22,6 +22,7 @@
             android:id="@+id/locationAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Text"
             android:layout_marginTop="40dp"
             android:text="@string/london_center"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            style="@style/Text"
             android:text="@string/at_7_30_pm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,11 +52,12 @@
             app:srcCompat="@drawable/degree" />
 
     <TextView
-            android:id="@+id/textView2"
-            android:layout_width="95dp"
-            android:layout_height="86dp"
+            android:id="@+id/temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/_25"
             android:textSize="75sp"
+            android:textColor="@color/orange"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/time" />
@@ -64,20 +67,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            style="@style/Text"
             android:text="@string/sunny_clear_weather"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/temp" />
 
-    <View
-            android:id="@+id/divider3"
-            android:layout_width="409dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:background="?android:attr/listDivider"
+    <View style="@style/Divider"
+            android:layout_marginTop="@dimen/small_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/summary" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

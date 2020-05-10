@@ -42,6 +42,8 @@ class CurrentFragment : Fragment() {
 
     private fun setupCurrent() {
         if (isAdded) {
+            time.text = current?.getTime
+            temp.text = current?.getTemperture().toString()
             summary.text = current?.summary
             locationAddress.text = current?.timezone
         }
