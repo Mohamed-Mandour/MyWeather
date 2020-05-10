@@ -22,8 +22,6 @@ class ParseForecast(private val forecastJson: String?) {
         return forecast
     }
 
-
-
     private fun mapCurrent(forecastJson: String?): Current? {
         val current = Current()
 

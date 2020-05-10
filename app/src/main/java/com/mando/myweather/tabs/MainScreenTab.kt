@@ -1,5 +1,7 @@
 package com.mando.myweather.tabs
 
+import com.mando.myweather.model.Current
+
 interface MainScreenTab {
 
     interface View {
