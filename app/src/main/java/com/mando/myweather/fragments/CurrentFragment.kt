@@ -1,5 +1,6 @@
 package com.mando.myweather.fragments
 
+import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.mando.myweather.background.ForecastJson
 import com.mando.myweather.impl.ParseForecast
 import com.mando.myweather.model.Current
 import kotlinx.android.synthetic.main.fragment_current.*
+import java.lang.ref.WeakReference
 
 private const val TAG = "CurrentFragment"
 private const val CURRENT = "current_forecast"
@@ -28,7 +30,7 @@ class CurrentFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-        FetchForecastTask().execute()
+        FetchForecastTask(this).execute()
     }
 
     override fun onCreateView(
@@ -45,18 +47,22 @@ class CurrentFragment : Fragment() {
         }
     }
 
-    private inner class FetchForecastTask: AsyncTask<Void?, Void?, String>() {
+    private class FetchForecastTask(val currentFragment: CurrentFragment) :
+        AsyncTask<Void?, Void?, String>() {
+
+        private val activityReference: WeakReference<CurrentFragment> =
+            WeakReference(currentFragment)
 
         override fun doInBackground(vararg params: Void?): String? {
-            return activity?.let { ForecastJson(it).getForecastJson() }
+            return activityReference.let { currentFragment.activity?.let { it1 -> ForecastJson(it1).getForecastJson() } }
         }
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
             val parseForecast = ParseForecast(result)
             val forecast = parseForecast.parseForecastJson()
-            current = forecast.getCurrent()
-            setupCurrent()
+            currentFragment.current = forecast.getCurrent()
+            currentFragment.setupCurrent()
         }
     }
 
