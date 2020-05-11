@@ -3,7 +3,6 @@ package com.mando.myweather
 import android.app.AlertDialog
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -11,25 +10,24 @@ import androidx.appcompat.app.ActionBar
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.mando.myweather.background.ForecastJsonTask
 import com.mando.myweather.fragments.Alert
 import com.mando.myweather.fragments.CurrentFragment
 import com.mando.myweather.fragments.Daily
 import com.mando.myweather.fragments.Hourly
 import com.mando.myweather.location.FusedLocationDataStore
 import com.mando.myweather.location.LocationDataStore
+import com.mando.myweather.model.Current
 import com.mando.myweather.tabs.MainScreenTab
 import com.mando.myweather.utils.AndroidPermissionChecker
 import com.mando.myweather.utils.PermissionExaminer
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 private const val TAG = "MainActivity"
 private const val LOCATION_REQUEST_CODE = 99
-class MainActivity : AppCompatActivity(), MainScreenTab.View, ForecastJsonTask.OnForecastJsonReady {
+class MainActivity : AppCompatActivity(), MainScreenTab.View {
 
     private lateinit var toolbar: ActionBar
-    private var forecastJsonTask: AsyncTask<String, String, String>? = null
-    private var bottomNavigation: BottomNavigationView? = null
     private  val locationDataStore: LocationDataStore?
         get() = FusedLocationDataStore.getInstance(application)
 
@@ -37,20 +35,9 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View, ForecastJsonTask.O
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         toolbar = supportActionBar!!
-        initialization()
-        showCurrentFragment()
+        navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         requestLocationPermission()
-        forecastJsonTask = ForecastJsonTask(application, this).execute()
         showCurrentFragment()
-    }
-
-    override fun getForecastJson(forecastJson: String?) {
-        Log.d(TAG, "forecastJson: $forecastJson")
-    }
-
-    private fun initialization() {
-        bottomNavigation = findViewById(R.id.navigationView)
-        bottomNavigation?.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
     private val mOnNavigationItemSelectedListener =

@@ -14,15 +14,13 @@ private const val WINDSPEED = "windSpeed"
 private const val VISIBILITY = "visibility"
 private const val PRECIPPROBABILITY = "precipProbability"
 
-class ParseForecast {
+class ParseForecast(private val forecastJson: String?) {
 
-    fun parseForecastJson(forecastJson: String?): Forecast{
+    fun parseForecastJson(): Forecast{
         val forecast = Forecast()
         forecast.setCurrent(mapCurrent(forecastJson))
         return forecast
     }
-
-
 
     private fun mapCurrent(forecastJson: String?): Current? {
         val current = Current()

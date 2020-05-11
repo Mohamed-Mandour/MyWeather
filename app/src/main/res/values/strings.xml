@@ -8,4 +8,6 @@
     <string name="at_7_30_pm">At 7:30 pm</string>
     <string name="_25">25</string>
     <string name="sunny_clear_weather">Sunny clear weather</string>
+    <string name="o">o</string>
+    <string name="lastUpdated">Last updated</string>
 </resources>
