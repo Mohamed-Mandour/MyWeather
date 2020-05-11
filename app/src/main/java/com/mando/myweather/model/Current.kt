@@ -28,13 +28,23 @@ class Current() : Parcelable {
 
     var precipProbability: Double = 0.0
 
-    val getTime: String
+    val getClockTime: String
         get() {
-            val formatter = SimpleDateFormat("h:mm a", Locale.getDefault())
-            formatter.timeZone = TimeZone.getTimeZone(timezone)
-            val dateTime = Date(time * 1000)
-            return formatter.format(dateTime)
+            val formatter = SimpleDateFormat("hh:mm a", Locale.getDefault())
+            return formatTime(formatter)
         }
+
+    val getDate: String
+    get() {
+        val formatter = SimpleDateFormat("d-MMM-yyyy", Locale.getDefault())
+        return formatTime(formatter)
+    }
+
+    private fun formatTime(formatter: SimpleDateFormat): String {
+        formatter.timeZone = TimeZone.getTimeZone(timezone)
+        val dateTime = Date(time * 1000)
+        return formatter.format(dateTime)
+    }
 
     fun getTemperture(): Int {
         return (temperature.toDouble() - 32).roundToInt().toInt() * 5 / 9

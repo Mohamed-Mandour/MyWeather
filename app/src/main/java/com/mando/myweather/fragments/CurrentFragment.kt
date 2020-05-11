@@ -1,6 +1,5 @@
 package com.mando.myweather.fragments
 
-import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -42,7 +41,8 @@ class CurrentFragment : Fragment() {
 
     private fun setupCurrent() {
         if (isAdded) {
-            time.text = current?.getTime
+            time.text = current?.getDate
+            lastUpdated.text = getString(R.string.lastUpdated)+ ": ${current?.getClockTime}"
             temp.text = current?.getTemperture().toString()
             summary.text = current?.summary
             locationAddress.text = current?.timezone
