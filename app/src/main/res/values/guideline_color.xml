@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="text_1">@color/orange</color>
+
+    <color name="white_color">@color/white</color>
+    <color name="white_fade">@color/fade</color>
+
+    <color name="background_color">@color/bg_color</color>
+</resources>

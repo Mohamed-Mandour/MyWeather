@@ -2,7 +2,15 @@
 <resources>
     <!-- Standard -->
     <dimen name="small_margin">8dp</dimen>
+    <dimen name="medium_margin">12dp</dimen>
     <dimen name="standard_margin">16dp</dimen>
+    <dimen name="above_standard_margin">22dp</dimen>
     <dimen name="large_margin">32dp</dimen>
+    <dimen name="extra_large_margin">40dp</dimen>
+
+    <dimen name="small_size">12sp</dimen>
+    <dimen name="standard_size">17sp</dimen>
+    <dimen name="large_size">23sp</dimen>
+    <dimen name="temperature_text_size">70sp</dimen>
 
 </resources>
