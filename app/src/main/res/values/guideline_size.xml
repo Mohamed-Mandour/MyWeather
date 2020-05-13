@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="margin_1">@dimen/small_margin</dimen>
+    <dimen name="margin_2">@dimen/medium_margin</dimen>
+    <dimen name="margin_3">@dimen/standard_margin</dimen>
+    <dimen name="margin_4">@dimen/above_standard_margin</dimen>
+    <dimen name="margin_5">@dimen/large_margin</dimen>
+    <dimen name="margin_6">@dimen/extra_large_margin</dimen>
+
+
+    <dimen name="text_size_1">@dimen/small_size</dimen>
+    <dimen name="text_size_2">@dimen/standard_size</dimen>
+    <dimen name="text_size_3">@dimen/large_size</dimen>
+    <dimen name="text_size_4">@dimen/temperature_text_size</dimen>
+
+</resources>
