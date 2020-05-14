@@ -30,13 +30,13 @@ class Forecast {
             SNOW -> { return R.drawable.ic_snow }
             SLEET -> { return R.drawable.ic_sleet }
             WIND -> { return R.drawable.ic_wind }
-            FOG -> { return R.drawable.fog }
-            CLOUDY -> { return R.drawable.cloudy }
-            CLEAR_DAY -> { return R.drawable.clear_day }
-            CLEAR_Night -> { return R.drawable.ic_moon_2 }
-            PARTLY_CLOUD_DAY -> { return R.drawable.partly_cloudy }
-            PARTLY_CLOUD_NIGHT -> { return R.drawable.cloudy_night }
+            FOG -> { return R.drawable.ic_fog }
+            CLOUDY -> { return R.drawable.ic_cloud }
+            CLEAR_DAY -> { return R.drawable.ic_clear_day }
+            CLEAR_Night -> { return R.drawable.ic_clear }
+            PARTLY_CLOUD_DAY -> { return R.drawable.ic_cloudy }
+            PARTLY_CLOUD_NIGHT -> { return R.drawable.ic_cloud_night }
         }
-        return R.drawable.clear_day
+        return R.drawable.ic_clear_day
     }
 }
