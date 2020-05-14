@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@color/background_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background_color"
         android:padding="@dimen/margin_1"
         tools:context=".fragments.CurrentFragment">
 
@@ -12,11 +12,11 @@
             android:id="@+id/locationIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_signs"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.058"
             app:layout_constraintStart_toEndOf="@+id/locationAddress"
-            app:layout_constraintTop_toTopOf="@+id/locationAddress" />
+            app:layout_constraintTop_toTopOf="@+id/locationAddress"
+            tools:src="@drawable/ic_signs" />
 
     <TextView
             android:id="@+id/locationAddress"
@@ -35,14 +35,16 @@
             app:layout_constraintHorizontal_bias="0.638"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/locationAddress"
-            app:srcCompat="@drawable/degree" />
+            tools:srcCompat="@drawable/degree" />
 
     <TextView
             android:id="@+id/temp"
             style="@style/Text"
-            android:textColor="@color/orange"
+            android:textColor="@color/text_1"
             android:textSize="@dimen/text_size_4"
+            app:layout_constraintBottom_toTopOf="@+id/summary"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/locationAddress"
             tools:text="@string/_25" />
@@ -50,33 +52,46 @@
     <TextView
             android:id="@+id/summary"
             style="@style/Text"
+            android:textSize="@dimen/text_size_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/temp"
-            tools:text="@string/sunny_clear_weather" />
+            tools:text="@string/clear_weather" />
 
     <TextView
             android:id="@+id/time"
             style="@style/Text"
             android:layout_marginStart="@dimen/margin_3"
             android:layout_marginTop="@dimen/margin_3"
-            android:text="@string/at_7_30_pm"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/summary" />
+            app:layout_constraintTop_toBottomOf="@+id/summary"
+            tools:text="@string/at_7_30_pm" />
 
     <TextView
             android:id="@+id/lastUpdated"
             style="@style/Text"
             android:layout_marginRight="@dimen/margin_3"
-            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintBottom_toTopOf="@+id/whiteLine"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="@string/lastUpdated" />
 
     <View
-            android:id="@+id/view"
+            android:id="@+id/whiteLine"
             style="@style/Divider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time" />
+            app:layout_constraintTop_toBottomOf="@+id/time"
+            tools:background="@color/text_1" />
+
+    <ImageView
+            android:id="@+id/icon_weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/temp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/temp"
+            app:layout_constraintTop_toBottomOf="@+id/locationIcon"
+            tools:src="@drawable/clear_night" />
 </androidx.constraintlayout.widget.ConstraintLayout>
