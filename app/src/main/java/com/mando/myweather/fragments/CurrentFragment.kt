@@ -43,9 +43,16 @@ class CurrentFragment : Fragment() {
         if (isAdded) {
             time.text = current?.getDate
             lastUpdated.text = getString(R.string.lastUpdated)+ ": ${current?.getClockTime}"
-            temp.text = current?.getTemperture().toString()
+            temp.text = current?.getTemperature().toString()
             summary.text = current?.summary
             locationAddress.text = current?.timezone
+            val currentIcon = current?.getIcon?.let { resources.getDrawable(it) }
+            icon_weather.setImageDrawable(currentIcon)
+            val locationPin = resources.getDrawable(R.drawable.ic_signs)
+            locationIcon.setImageDrawable(locationPin)
+            val degreeIcon = resources.getDrawable(R.drawable.ic_celsius_degrees_symbol_of_temperature)
+            degree.setImageDrawable(degreeIcon)
+            whiteLine.setBackgroundColor(resources.getColor(R.color.white))
         }
     }
 

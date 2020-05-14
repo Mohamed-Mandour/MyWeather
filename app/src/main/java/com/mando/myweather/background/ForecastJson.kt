@@ -24,7 +24,7 @@ class ForecastJson(private val context: Context) {
         val location = locationDataStore?.location
         val forecastUrl = ForecastUrlImpl()
         val request: Request = Request.Builder().url(forecastUrl.darkSkyForecastUrl).build()
-        Log.d(TAG, "forecast url: $ request")
+        Log.d(TAG, "forecast url: $ request $request")
         try {
             val response: Response =
                 OkHttpClient(context).getHTTPClient()!!.newCall(request).execute()

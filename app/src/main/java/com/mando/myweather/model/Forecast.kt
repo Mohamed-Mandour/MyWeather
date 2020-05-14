@@ -2,10 +2,18 @@ package com.mando.myweather.model
 
 import com.mando.myweather.R
 
+private const val CLEAR_DAY = "clear-day"
+private const val CLEAR_Night = "clear-night"
+private const val RAIN = "rain"
+private const val SNOW = "snow"
+private const val SLEET = "sleet"
+private const val WIND = "wind"
+private const val FOG = "fog"
+private const val CLOUDY = "cloudy"
+private const val PARTLY_CLOUD_DAY = "partly-cloudy-day"
+private const val PARTLY_CLOUD_NIGHT = "partly-cloudy-night"
 
-private const val TAG = "Forecast"
-
-class Forecast() {
+class Forecast {
     private var current: Current? = null
 
     fun getCurrent(): Current? {
@@ -17,39 +25,18 @@ class Forecast() {
     }
 
     fun getIconId(iconString: String): Int {
-        var iconId: Int = R.drawable.clear_day
         when (iconString) {
-            "clear-day" -> {
-                iconId = R.drawable.clear_day
-            }
-            "clear-night" -> {
-                iconId = R.drawable.clear_night
-            }
-            "rain" -> {
-                iconId = R.drawable.rain
-            }
-            "snow" -> {
-                iconId = R.drawable.snow
-            }
-            "sleet" -> {
-                iconId = R.drawable.sleet
-            }
-            "wind" -> {
-                iconId = R.drawable.wind
-            }
-            "fog" -> {
-                iconId = R.drawable.fog
-            }
-            "cloudy" -> {
-                iconId = R.drawable.cloudy
-            }
-            "partly-cloudy-day" -> {
-                iconId = R.drawable.partly_cloudy
-            }
-            "partly-cloudy-night" -> {
-                iconId = R.drawable.cloudy_night
-            }
+            RAIN -> { return R.drawable.rain }
+            SNOW -> { return R.drawable.snow }
+            SLEET -> { return R.drawable.sleet }
+            WIND -> { return R.drawable.wind }
+            FOG -> { return R.drawable.fog }
+            CLOUDY -> { return R.drawable.cloudy }
+            CLEAR_DAY -> { return R.drawable.clear_day }
+            CLEAR_Night -> { return R.drawable.ic_moon }
+            PARTLY_CLOUD_DAY -> { return R.drawable.partly_cloudy }
+            PARTLY_CLOUD_NIGHT -> { return R.drawable.cloudy_night }
         }
-        return iconId
+        return R.drawable.clear_day
     }
 }
