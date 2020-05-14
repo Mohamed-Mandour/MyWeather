@@ -40,14 +40,20 @@ class Current() : Parcelable {
         return formatTime(formatter)
     }
 
+    val getIcon: Int
+        get() {
+            val forecast = Forecast()
+            return forecast.getIconId(icon)
+        }
+
     private fun formatTime(formatter: SimpleDateFormat): String {
         formatter.timeZone = TimeZone.getTimeZone(timezone)
         val dateTime = Date(time * 1000)
         return formatter.format(dateTime)
     }
 
-    fun getTemperture(): Int {
-        return (temperature.toDouble() - 32).roundToInt().toInt() * 5 / 9
+    fun getTemperature(): Int {
+        return (temperature.toDouble() - 32).roundToInt() * 5 / 9
     }
 
     constructor(parcel: Parcel) : this() {
