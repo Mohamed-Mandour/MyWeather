@@ -52,7 +52,7 @@ class CurrentFragment : Fragment() {
             locationIcon.setImageDrawable(locationPin)
             val degreeIcon = resources.getDrawable(R.drawable.ic_celsius_degrees_symbol_of_temperature)
             degree.setImageDrawable(degreeIcon)
-            whiteLine.setBackgroundColor(resources.getColor(R.color.white))
+            whiteLine.setBackgroundColor(resources.getColor(R.color.main_color))
         }
     }
 

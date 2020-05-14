@@ -10,7 +10,7 @@
     <style name="Text">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">@color/text_1</item>
+        <item name="android:textColor">@color/main_color</item>
         <item name="android:textSize">@dimen/text_size_1</item>
         <item name="android:textStyle">italic</item>
     </style>
