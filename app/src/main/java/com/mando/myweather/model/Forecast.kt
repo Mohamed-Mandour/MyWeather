@@ -26,14 +26,14 @@ class Forecast {
 
     fun getIconId(iconString: String): Int {
         when (iconString) {
-            RAIN -> { return R.drawable.rain }
-            SNOW -> { return R.drawable.snow }
-            SLEET -> { return R.drawable.sleet }
-            WIND -> { return R.drawable.wind }
+            RAIN -> { return R.drawable.ic_rain }
+            SNOW -> { return R.drawable.ic_snow }
+            SLEET -> { return R.drawable.ic_sleet }
+            WIND -> { return R.drawable.ic_wind }
             FOG -> { return R.drawable.fog }
             CLOUDY -> { return R.drawable.cloudy }
             CLEAR_DAY -> { return R.drawable.clear_day }
-            CLEAR_Night -> { return R.drawable.ic_moon }
+            CLEAR_Night -> { return R.drawable.ic_moon_2 }
             PARTLY_CLOUD_DAY -> { return R.drawable.partly_cloudy }
             PARTLY_CLOUD_NIGHT -> { return R.drawable.cloudy_night }
         }
