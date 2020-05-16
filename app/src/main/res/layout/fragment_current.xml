@@ -14,12 +14,12 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.058"
-            app:layout_constraintStart_toEndOf="@+id/locationAddress"
-            app:layout_constraintTop_toTopOf="@+id/locationAddress"
+            app:layout_constraintStart_toEndOf="@+id/locationTimeZone"
+            app:layout_constraintTop_toTopOf="@+id/locationTimeZone"
             tools:src="@drawable/ic_signs" />
 
     <TextView
-            android:id="@+id/locationAddress"
+            android:id="@+id/locationTimeZone"
             style="@style/Text"
             android:layout_marginTop="@dimen/margin_3"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.638"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locationAddress"
+            app:layout_constraintTop_toBottomOf="@+id/locationTimeZone"
             tools:srcCompat="@drawable/degree" />
 
     <TextView
@@ -42,15 +42,15 @@
             style="@style/Text"
             android:textColor="@color/main_color"
             android:textSize="@dimen/text_size_4"
-            app:layout_constraintBottom_toTopOf="@+id/summary"
+            app:layout_constraintBottom_toTopOf="@+id/CurrentSummary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locationAddress"
+            app:layout_constraintTop_toBottomOf="@+id/locationTimeZone"
             tools:text="@string/_25" />
 
     <TextView
-            android:id="@+id/summary"
+            android:id="@+id/CurrentSummary"
             style="@style/Text"
             android:textSize="@dimen/text_size_2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,18 +59,18 @@
             tools:text="@string/clear_weather" />
 
     <TextView
-            android:id="@+id/time"
+            android:id="@+id/CurrentDay"
             style="@style/Text"
             android:layout_marginStart="@dimen/margin_3"
             android:layout_marginTop="@dimen/margin_3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/summary"
+            app:layout_constraintTop_toBottomOf="@+id/CurrentSummary"
             tools:text="@string/at_7_30_pm" />
 
     <TextView
-            android:id="@+id/lastUpdated"
+            android:id="@+id/lastTimeUpdated"
             style="@style/Text"
-            android:layout_marginRight="@dimen/margin_3"
+            android:layout_marginEnd="@dimen/margin_3"
             app:layout_constraintBottom_toTopOf="@+id/whiteLine"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="@string/lastUpdated" />
@@ -81,16 +81,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time"
+            app:layout_constraintTop_toBottomOf="@+id/CurrentDay"
             tools:background="@color/main_color" />
 
     <ImageView
-            android:id="@+id/icon_weather"
+            android:id="@+id/iconWeather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/temp"
             app:layout_constraintEnd_toStartOf="@+id/temp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locationAddress"
+            app:layout_constraintTop_toBottomOf="@+id/locationTimeZone"
             tools:src="@drawable/clear_night" />
 </androidx.constraintlayout.widget.ConstraintLayout>

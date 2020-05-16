@@ -1,5 +1,6 @@
 package com.mando.myweather.fragments
 
+import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,16 +10,16 @@ import androidx.fragment.app.Fragment
 import com.mando.myweather.R
 import com.mando.myweather.background.ForecastJson
 import com.mando.myweather.impl.ParseForecast
-import com.mando.myweather.model.Current
+import com.mando.myweather.mvp.CurrentScreenContract
+import com.mando.myweather.mvp.CurrentScreenPresenter
 import kotlinx.android.synthetic.main.fragment_current.*
 import java.lang.ref.WeakReference
 
 private const val TAG = "CurrentFragment"
-private const val CURRENT = "current_forecast"
 
-class CurrentFragment : Fragment() {
+class CurrentFragment : Fragment(), CurrentScreenContract.View{
 
-    private var current: Current? = null
+    private lateinit var presenter: CurrentScreenContract.Presenter
 
     companion object {
         fun newInstance(): CurrentFragment {
@@ -29,6 +30,7 @@ class CurrentFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
+        presenter = CurrentScreenPresenter(this)
         FetchForecastTask(this).execute()
     }
 
@@ -39,21 +41,42 @@ class CurrentFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_current, container, false)
     }
 
-    private fun setupCurrent() {
-        if (isAdded) {
-            time.text = current?.getDate
-            lastUpdated.text = getString(R.string.lastUpdated)+ ": ${current?.getClockTime}"
-            temp.text = current?.getTemperature().toString()
-            summary.text = current?.summary
-            locationAddress.text = current?.timezone
-            val currentIcon = current?.getIcon?.let { resources.getDrawable(it) }
-            icon_weather.setImageDrawable(currentIcon)
-            val locationPin = resources.getDrawable(R.drawable.ic_signs)
-            locationIcon.setImageDrawable(locationPin)
-            val degreeIcon = resources.getDrawable(R.drawable.ic_celsius_degrees_symbol_of_temperature)
-            degree.setImageDrawable(degreeIcon)
-            whiteLine.setBackgroundColor(resources.getColor(R.color.main_color))
-        }
+    override fun getContext() = activity
+
+    override fun showWeatherIcon(icon: Drawable?) {
+        iconWeather.setImageDrawable(icon)
+    }
+
+    override fun showLocationIcon(locationPin: Drawable?) {
+        locationIcon.setImageDrawable(locationPin)
+    }
+
+    override fun showCurrentDay(day: String?) {
+        CurrentDay.text = day
+    }
+
+    override fun showSummary(summary: String?) {
+        CurrentSummary.text = summary
+    }
+
+    override fun showTimezone(timezone: String?) {
+        locationTimeZone.text = timezone
+    }
+
+    override fun showDegreeIcon(degreeIcon: Drawable?) {
+        degree.setImageDrawable(degreeIcon)
+    }
+
+    override fun showLastUpdated(lastUpdated: String?) {
+        lastTimeUpdated.text = lastUpdated
+    }
+
+    override fun showWhiteLine(mainColor: Int) {
+        whiteLine.setBackgroundColor(mainColor)
+    }
+
+    override fun showTemperature(currentTemperature: String?) {
+        temp.text = currentTemperature
     }
 
     private class FetchForecastTask(val currentFragment: CurrentFragment) :
@@ -70,9 +93,8 @@ class CurrentFragment : Fragment() {
             super.onPostExecute(result)
             val parseForecast = ParseForecast(result)
             val forecast = parseForecast.parseForecastJson()
-            currentFragment.current = forecast.getCurrent()
-            currentFragment.setupCurrent()
+            val current = forecast.getCurrent()
+            currentFragment.presenter.setCurrentForecast(current)
         }
     }
-
 }

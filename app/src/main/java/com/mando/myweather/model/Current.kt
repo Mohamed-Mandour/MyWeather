@@ -28,7 +28,7 @@ class Current() : Parcelable {
 
     var precipProbability: Double = 0.0
 
-    val getClockTime: String
+    val getLastUpdated: String
         get() {
             val formatter = SimpleDateFormat("hh:mm a", Locale.getDefault())
             return formatTime(formatter)
