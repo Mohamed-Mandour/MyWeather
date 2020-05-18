@@ -17,7 +17,7 @@ class CurrentScreenPresenter(private val view: CurrentScreenContract.View) :
         view.showSummary(current?.summary)
         view.showWeatherIcon(getWeatherIcon(current))
         view.showLocationIcon(context?.resources?.getDrawable(R.drawable.ic_signs))
-        view.showDegreeIcon(context?.resources?.getDrawable(R.drawable.degree))
+        view.showDegreeIcon(context?.resources?.getDrawable(R.drawable.ic_celsius_degrees_symbol_of_temperature))
         setHorizontalLine()
     }
 

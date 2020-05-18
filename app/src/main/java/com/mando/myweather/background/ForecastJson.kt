@@ -3,7 +3,6 @@ package com.mando.myweather.background
 import android.content.Context
 import android.util.Log
 import com.mando.myweather.impl.ForecastUrlImpl
-import com.mando.myweather.impl.ParseForecast
 import com.mando.myweather.location.FusedLocationDataStore
 import com.mando.myweather.location.LocationDataStore
 import com.mando.myweather.utils.OkHttpClient
