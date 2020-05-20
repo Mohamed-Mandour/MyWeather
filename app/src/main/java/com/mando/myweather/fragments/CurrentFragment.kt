@@ -79,6 +79,42 @@ class CurrentFragment : Fragment(), CurrentScreenContract.View{
         temp.text = currentTemperature
     }
 
+    override fun showPrecipitationIcon(precipitationIcon: Drawable?) {
+        precipitationImage.setImageDrawable(precipitationIcon)
+    }
+
+    override fun showPrecipitationText(precipitation: String?) {
+        precipitationTextView.text = precipitation
+    }
+
+    override fun showPrecipitationValue(Precipitation: String?) {
+        precipitationValue.text = Precipitation
+    }
+
+    override fun showPressureIcon(pressureIcon: Drawable?) {
+        pressureImage.setImageDrawable(pressureIcon)
+    }
+
+    override fun showPressureText(pressure: String?) {
+        pressureTextView.text = pressure
+    }
+
+    override fun showPressureValue(pressure: String?) {
+        pressureValue.text = pressure
+    }
+
+    override fun showWindIcon(windIcon: Drawable?) {
+        windImage.setImageDrawable(windIcon)
+    }
+
+    override fun showWindText(wind: String?) {
+        windTextView.text = wind
+    }
+
+    override fun showWindValue(wind: String?) {
+        windValue.text = wind
+    }
+
     private class FetchForecastTask(val currentFragment: CurrentFragment) :
         AsyncTask<Void?, Void?, String>() {
 

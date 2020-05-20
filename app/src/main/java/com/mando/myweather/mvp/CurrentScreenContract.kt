@@ -17,6 +17,15 @@ interface CurrentScreenContract {
         fun showLastUpdated(lastUpdated: String?)
         fun showWhiteLine(line: Int)
         fun showTemperature(currentTemperature: String?)
+        fun showPrecipitationIcon(precipitationIcon: Drawable?)
+        fun showPrecipitationText(precipitation: String?)
+        fun showPrecipitationValue(Precipitation: String?)
+        fun showPressureIcon(pressureIcon: Drawable?)
+        fun showPressureText(pressure: String?)
+        fun showPressureValue(pressure: String?)
+        fun showWindIcon(windIcon: Drawable?)
+        fun showWindText(wind: String?)
+        fun showWindValue(wind: String?)
         fun getContext(): Context?
     }
 

@@ -18,6 +18,16 @@
             app:layout_constraintTop_toTopOf="@+id/locationTimeZone"
             tools:src="@drawable/ic_signs" />
 
+    <ImageView
+            android:id="@+id/iconWeather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/temp"
+            app:layout_constraintEnd_toStartOf="@+id/temp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locationTimeZone"
+            tools:src="@drawable/clear_night" />
+
     <TextView
             android:id="@+id/locationTimeZone"
             style="@style/Text"
@@ -35,7 +45,7 @@
             app:layout_constraintHorizontal_bias="0.638"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/locationTimeZone"
-            tools:srcCompat="@drawable/degree" />
+            tools:srcCompat="@drawable/ic_celsius_degrees_symbol_of_temperature" />
 
     <TextView
             android:id="@+id/temp"
@@ -85,12 +95,107 @@
             tools:background="@color/main_color" />
 
     <ImageView
-            android:id="@+id/iconWeather"
+            android:id="@+id/precipitationImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/temp"
-            app:layout_constraintEnd_toStartOf="@+id/temp"
+            tools:src="@drawable/ic_precipitation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/windImage"
+            app:layout_constraintTop_toTopOf="@+id/windImage" />
+
+    <ImageView
+            android:id="@+id/windImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            tools:src="@drawable/ic_fan"
+            app:layout_constraintEnd_toStartOf="@+id/precipitationImage"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/pressureImage"
+            app:layout_constraintTop_toBottomOf="@+id/whiteLine" />
+
+    <ImageView
+            android:id="@+id/pressureImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:src="@drawable/ic_pressure"
+            app:layout_constraintEnd_toStartOf="@+id/windImage"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locationTimeZone"
-            tools:src="@drawable/clear_night" />
+            app:layout_constraintTop_toTopOf="@+id/windImage" />
+
+
+    <TextView
+            android:id="@+id/windTextView"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="@+id/windImage"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/windImage"
+            app:layout_constraintTop_toBottomOf="@+id/windImage"
+            tools:text="@string/wind" />
+
+    <TextView
+            android:id="@+id/pressureTextView"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="@+id/pressureImage"
+            app:layout_constraintStart_toStartOf="@+id/pressureImage"
+            app:layout_constraintTop_toBottomOf="@+id/pressureImage"
+            tools:text="@string/pressure" />
+
+    <TextView
+            android:id="@+id/precipitationTextView"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="@+id/precipitationImage"
+            app:layout_constraintStart_toStartOf="@+id/precipitationImage"
+            app:layout_constraintTop_toBottomOf="@+id/precipitationImage"
+            tools:text="@string/precipitation" />
+
+
+    <TextView
+            android:id="@+id/precipitationValue"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="@+id/precipitationTextView"
+            app:layout_constraintHorizontal_bias="0.533"
+            app:layout_constraintStart_toStartOf="@+id/precipitationTextView"
+            app:layout_constraintTop_toBottomOf="@+id/precipitationTextView"
+            tools:text="@string/_20" />
+
+    <TextView
+            android:id="@+id/windValue"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="@+id/windTextView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/windTextView"
+            app:layout_constraintTop_toBottomOf="@+id/windTextView"
+            tools:text="@string/speed_wind" />
+
+    <TextView
+            android:id="@+id/pressureValue"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/pressureTextView"
+            app:layout_constraintHorizontal_bias="0.428"
+            app:layout_constraintStart_toStartOf="@+id/pressureTextView"
+            app:layout_constraintTop_toBottomOf="@+id/pressureTextView"
+            tools:text="@string/number" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,4 +10,10 @@
     <string name="clear_weather">clear weather</string>
     <string name="o">o</string>
     <string name="lastUpdated">Last updated</string>
+    <string name="precipitation">Precipitation</string>
+    <string name="wind">Wind speed</string>
+    <string name="pressure">Pressure</string>
+    <string name="_20">20%</string>
+    <string name="speed_wind">12 Km</string>
+    <string name="number">1234</string>
 </resources>
