@@ -16,4 +16,8 @@
     <string name="_20">20%</string>
     <string name="speed_wind">12 Km</string>
     <string name="number">1234</string>
+    <string name="visibility">Visibility</string>
+    <string name="humidity">Humidity</string>
+    <string name="humidityValue">0.42</string>
+    <string name="cloud_cover">Cloud Cover</string>
 </resources>

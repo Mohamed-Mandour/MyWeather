@@ -1,34 +1,5 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:aapt="http://schemas.android.com/aapt"
-        android:width="65dp"
-        android:height="65dp"
-        android:autoMirrored="true"
-        android:viewportWidth="192"
-        android:viewportHeight="192">
-
-    <path android:pathData="m144,48h-16a48,48 0,0 0,-96 0c0,0.9 0.026,1.807 0.078,2.71a48,48 0,0 0,15.922 93.29h96a48,48 0,0 0,0 -96z">
-        <aapt:attr name="android:fillColor">
-            <gradient
-                    android:endX="149.925"
-                    android:endY="34.075"
-                    android:startX="34.075"
-                    android:startY="149.925"
-                    android:type="linear">
-                <item
-                        android:color="#FF34CDFA"
-                        android:offset="0" />
-                <item
-                        android:color="#FF9800"
-                        android:offset="1" />
-            </gradient>
-        </aapt:attr>
-    </path>
-    <path
-            android:fillColor="#5C80C5"
-            android:pathData="m144,104a32,32 0,0 0,-64 0q0,0.506 0.016,1.008a32,32 0,0 0,7.984 62.992h56a32,32 0,0 0,0 -64z" />
-    <path
-            android:fillColor="#60E0EC"
-            android:pathData="m160,152h-56a31.993,31.993 0,0 1,-29.164 -45.162,32 32,0 0,0 13.164,61.162h56a32.037,32.037 0,0 0,29.158 -18.842,31.8 31.8,0 0,1 -13.158,2.842z" />
-
-
+<vector android:autoMirrored="true" android:height="45dp"
+    android:viewportHeight="463" android:viewportWidth="463.83426"
+    android:width="45dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#a3d4f7" android:pathData="m375.836,199.957c-5.852,0 -11.691,0.582 -17.426,1.742 -4.324,-21.582 -18.305,-39.992 -37.934,-49.957 -19.625,-9.965 -42.738,-10.383 -62.715,-1.137 -18.078,-49.797 -73.102,-75.508 -122.898,-57.43s-75.508,73.105 -57.43,122.898c-43.621,1.379 -78.078,37.484 -77.426,81.121 0.656,43.641 36.184,78.691 79.828,78.762h296c48.598,0 88,-39.398 88,-88 0,-48.602 -39.402,-88 -88,-88zM375.836,199.957"/>
 </vector>

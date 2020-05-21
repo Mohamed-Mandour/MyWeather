@@ -98,32 +98,32 @@
             android:id="@+id/precipitationImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:src="@drawable/ic_precipitation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/windImage"
-            app:layout_constraintTop_toTopOf="@+id/windImage" />
+            app:layout_constraintTop_toTopOf="@+id/windImage"
+            tools:src="@drawable/ic_precipitation" />
 
     <ImageView
             android:id="@+id/windImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            tools:src="@drawable/ic_fan"
             app:layout_constraintEnd_toStartOf="@+id/precipitationImage"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/pressureImage"
-            app:layout_constraintTop_toBottomOf="@+id/whiteLine" />
+            app:layout_constraintTop_toBottomOf="@+id/whiteLine"
+            tools:src="@drawable/ic_fan" />
 
     <ImageView
             android:id="@+id/pressureImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:src="@drawable/ic_pressure"
             app:layout_constraintEnd_toStartOf="@+id/windImage"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/windImage" />
+            app:layout_constraintTop_toTopOf="@+id/windImage"
+            tools:src="@drawable/ic_pressure" />
 
 
     <TextView
@@ -190,12 +190,108 @@
             style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/small_margin"
             app:layout_constraintEnd_toEndOf="@+id/pressureTextView"
             app:layout_constraintHorizontal_bias="0.428"
             app:layout_constraintStart_toStartOf="@+id/pressureTextView"
             app:layout_constraintTop_toBottomOf="@+id/pressureTextView"
             tools:text="@string/number" />
 
+    <ImageView
+            android:id="@+id/visibilityImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            app:layout_constraintEnd_toStartOf="@+id/cloudCoverImage"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/humidityImageView"
+            app:layout_constraintTop_toBottomOf="@+id/windValue"
+            tools:src="@drawable/ic_eye" />
+
+    <ImageView
+            android:id="@+id/cloudCoverImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/visibilityImage"
+            app:layout_constraintTop_toTopOf="@+id/visibilityImage"
+            tools:src="@drawable/ic_cloud" />
+
+    <ImageView
+            android:id="@+id/humidityImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/visibilityImage"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/visibilityImage"
+            tools:src="@drawable/ic_humidity" />
+
+    <TextView
+            android:id="@+id/visibilityTextView"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="@+id/visibilityImage"
+            app:layout_constraintStart_toStartOf="@+id/visibilityImage"
+            app:layout_constraintTop_toBottomOf="@+id/visibilityImage"
+            tools:text="@string/visibility" />
+
+    <TextView
+            android:id="@+id/humidityTextView"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="@+id/humidityImageView"
+            app:layout_constraintStart_toStartOf="@+id/humidityImageView"
+            app:layout_constraintTop_toBottomOf="@+id/humidityImageView"
+            tools:text="@string/humidity" />
+
+    <TextView
+            android:id="@+id/cloudTextView"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            tools:text="@string/cloud_cover"
+            app:layout_constraintEnd_toEndOf="@+id/cloudCoverImage"
+            app:layout_constraintStart_toStartOf="@+id/cloudCoverImage"
+            app:layout_constraintTop_toBottomOf="@+id/cloudCoverImage" />
+
+    <TextView
+            android:id="@+id/HumidityValue"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/humidityValue"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="@+id/humidityTextView"
+            app:layout_constraintStart_toStartOf="@+id/humidityTextView"
+            app:layout_constraintTop_toBottomOf="@+id/humidityTextView" />
+
+    <TextView
+            android:id="@+id/visibilityValue"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/_25"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="@+id/visibilityTextView"
+            app:layout_constraintStart_toStartOf="@+id/visibilityTextView"
+            app:layout_constraintTop_toBottomOf="@+id/visibilityTextView" />
+
+    <TextView
+            android:id="@+id/cloudCoverValue"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:text="@string/_25"
+            app:layout_constraintEnd_toEndOf="@+id/cloudTextView"
+            app:layout_constraintStart_toStartOf="@+id/cloudTextView"
+            app:layout_constraintTop_toBottomOf="@+id/cloudTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
