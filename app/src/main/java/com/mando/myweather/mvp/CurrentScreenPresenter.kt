@@ -10,9 +10,8 @@ class CurrentScreenPresenter(private val view: CurrentScreenContract.View) :
     private val context = view.getContext()
 
     override fun setCurrentForecast(current: Current?) {
-        view.showTemperature(current?.getTemperature().toString())
         view.showCurrentDay(current?.getDate)
-        view.showLastUpdated(current?.getLastUpdated)
+        view.showLastUpdated("Last updated: ${current?.getLastUpdated}")
         view.showTimezone(current?.timezone)
         view.showSummary(current?.summary)
         view.showWeatherIcon(getWeatherIcon(current))
@@ -21,14 +20,36 @@ class CurrentScreenPresenter(private val view: CurrentScreenContract.View) :
         view.showPrecipitationIcon(getPrecipitationIcon())
         view.showPrecipitationText(getPrecipitationText())
         view.showPrecipitationValue(current?.precipProbability.toString())
+        view.showTemperature(current?.getTemperature().toString())
         view.showWindIcon(getWindIcon())
         view.showWindText(getWindText())
         view.showWindValue("${current?.windSpeed.toString()} km/h")
         view.showPressureIcon(getPressureIcon())
         view.showPressureText(getPressureText())
         view.showPressureValue(current?.pressure.toString())
+        view.showVisibilityIcon(getVisibilityIcon())
+        view.showVisibilityText(setVisibilityText())
+        view.showVisibilityValue(current?.visibility.toString())
+        view.showHumidityIcon(getHumidityIcon())
+        view.showHumidityText(getHumidityText())
+        view.showHumidityValue(current?.humidity.toString())
+        view.showCloudCoverIcon(getCloudCoverIcon())
+        view.showCloudCoverText(getCloudCoverText())
+        view.showCloudCoverValue(current?.cloudCover.toString())
         getHorizontalLineColor()
     }
+
+    private fun getCloudCoverText(): String? = context?.resources?.getString(R.string.cloud_cover)
+
+    private fun getCloudCoverIcon(): Drawable? = context?.resources?.getDrawable(R.drawable.ic_cloud)
+
+    private fun getHumidityText(): String? = context?.resources?.getString(R.string.humidity)
+
+    private fun getHumidityIcon(): Drawable? = context?.resources?.getDrawable(R.drawable.ic_humidity)
+
+    private fun setVisibilityText(): String? = context?.resources?.getString(R.string.visibility)
+
+    private fun getVisibilityIcon(): Drawable? = context?.resources?.getDrawable(R.drawable.ic_eye)
 
     private fun getPressureText(): String? = context?.resources?.getString(R.string.pressure)
 

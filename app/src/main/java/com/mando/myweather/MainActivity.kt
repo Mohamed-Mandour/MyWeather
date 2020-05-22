@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.core.app.ActivityCompat
@@ -27,17 +28,25 @@ private const val TAG = "MainActivity"
 private const val LOCATION_REQUEST_CODE = 99
 class MainActivity : AppCompatActivity(), MainScreenTab.View {
 
-    private lateinit var toolbar: ActionBar
     private  val locationDataStore: LocationDataStore?
         get() = FusedLocationDataStore.getInstance(application)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        toolbar = supportActionBar!!
+        setToolBar()
+
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         requestLocationPermission()
         showCurrentFragment()
+    }
+
+    private fun setToolBar() {
+        mainActivityToolbar.title = ""
+        mainActivityToolbar.subtitle = ""
+        val toolbarTitle = findViewById<TextView>(R.id.toolbarTitle)
+        toolbarTitle.text = getString(R.string.current_forecast)
+        setSupportActionBar(mainActivityToolbar)
     }
 
     private val mOnNavigationItemSelectedListener =

@@ -13,6 +13,7 @@ private const val PRESSURE = "pressure"
 private const val WINDSPEED = "windSpeed"
 private const val VISIBILITY = "visibility"
 private const val PRECIPPROBABILITY = "precipProbability"
+private const val CLOUDCOVER = "cloudCover"
 
 class ParseForecast(private val forecastJson: String?) {
 
@@ -38,6 +39,7 @@ class ParseForecast(private val forecastJson: String?) {
         current.windSpeed = currently.getDouble(WINDSPEED)
         current.visibility = currently.getDouble(VISIBILITY)
         current.precipProbability = currently.getDouble(PRECIPPROBABILITY)
+        current.cloudCover = currently.getDouble(CLOUDCOVER)
         return current
     }
 

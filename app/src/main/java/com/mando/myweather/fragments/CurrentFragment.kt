@@ -52,11 +52,11 @@ class CurrentFragment : Fragment(), CurrentScreenContract.View{
     }
 
     override fun showCurrentDay(day: String?) {
-        CurrentDay.text = day
+        currentDay.text = day
     }
 
     override fun showSummary(summary: String?) {
-        CurrentSummary.text = summary
+        currentSummary.text = summary
     }
 
     override fun showTimezone(timezone: String?) {
@@ -113,6 +113,42 @@ class CurrentFragment : Fragment(), CurrentScreenContract.View{
 
     override fun showWindValue(wind: String?) {
         windValue.text = wind
+    }
+
+    override fun showVisibilityIcon(visibilityIcon: Drawable?) {
+        visibilityImage.setImageDrawable(visibilityIcon)
+    }
+
+    override fun showVisibilityText(visibilityText: String?) {
+        visibilityTextView.text = visibilityText
+    }
+
+    override fun showVisibilityValue(visibility: String?) {
+        visibilityValue.text = visibility
+    }
+
+    override fun showHumidityIcon(humidityIcon: Drawable?) {
+        humidityImageView.setImageDrawable(humidityIcon)
+    }
+
+    override fun showHumidityText(humidityText: String?) {
+        humidityTextView.text = humidityText
+    }
+
+    override fun showHumidityValue(humidity: String?) {
+        humidityValue.text = humidity
+    }
+
+    override fun showCloudCoverIcon(cloudCoverIcon: Drawable?) {
+        cloudCoverImage.setImageDrawable(cloudCoverIcon)
+    }
+
+    override fun showCloudCoverText(cloudCover: String?) {
+        cloudTextView.text = cloudCover
+    }
+
+    override fun showCloudCoverValue(cloudCover: String?) {
+        cloudCoverValue.text = cloudCover
     }
 
     private class FetchForecastTask(val currentFragment: CurrentFragment) :
