@@ -24,7 +24,10 @@ class Current() : Parcelable {
 
     var windSpeed: Double = 0.0
 
+    var cloudCover: Double = 0.0
+
     var visibility: Double = 0.0
+
 
     var precipProbability: Double = 0.0
 
@@ -67,6 +70,7 @@ class Current() : Parcelable {
         windSpeed = parcel.readDouble()
         visibility = parcel.readDouble()
         precipProbability = parcel.readDouble()
+        cloudCover = parcel.readDouble()
     }
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
@@ -80,6 +84,7 @@ class Current() : Parcelable {
         dest?.writeDouble(windSpeed)
         dest?.writeDouble(visibility)
         dest?.writeDouble(precipProbability)
+        dest?.writeDouble(cloudCover)
     }
 
     override fun describeContents(): Int {
