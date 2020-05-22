@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">myWeather</string>
     <string name="current">Current</string>
+    <string name="current_forecast">Current forecast</string>
     <string name="hourly">Hourly</string>
     <string name="daily">Daily</string>
     <string name="alert">Alert</string>
