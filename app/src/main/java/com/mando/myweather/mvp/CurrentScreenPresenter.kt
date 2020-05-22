@@ -10,7 +10,6 @@ class CurrentScreenPresenter(private val view: CurrentScreenContract.View) :
     private val context = view.getContext()
 
     override fun setCurrentForecast(current: Current?) {
-        view.showTemperature(current?.getTemperature().toString())
         view.showCurrentDay(current?.getDate)
         view.showLastUpdated("Last updated: ${current?.getLastUpdated}")
         view.showTimezone(current?.timezone)
@@ -21,6 +20,7 @@ class CurrentScreenPresenter(private val view: CurrentScreenContract.View) :
         view.showPrecipitationIcon(getPrecipitationIcon())
         view.showPrecipitationText(getPrecipitationText())
         view.showPrecipitationValue(current?.precipProbability.toString())
+        view.showTemperature(current?.getTemperature().toString())
         view.showWindIcon(getWindIcon())
         view.showWindText(getWindText())
         view.showWindValue("${current?.windSpeed.toString()} km/h")
