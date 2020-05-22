@@ -26,6 +26,15 @@ interface CurrentScreenContract {
         fun showWindIcon(windIcon: Drawable?)
         fun showWindText(wind: String?)
         fun showWindValue(wind: String?)
+        fun showVisibilityIcon(visibilityIcon: Drawable?)
+        fun showVisibilityText(visibilityText: String?)
+        fun showVisibilityValue(visibilityValue: String?)
+        fun showHumidityIcon(humidityIcon: Drawable?)
+        fun showHumidityText(humidityText: String?)
+        fun showHumidityValue(humidityValue: String?)
+        fun showCloudCoverIcon(cloudCoverIcon: Drawable?)
+        fun showCloudCoverText(cloudCoverText: String?)
+        fun showCloudCoverValue(cloudCoverValue: String?)
         fun getContext(): Context?
     }
 
