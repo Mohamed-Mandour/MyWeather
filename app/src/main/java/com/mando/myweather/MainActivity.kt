@@ -7,18 +7,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.mando.myweather.fragments.Alert
-import com.mando.myweather.fragments.CurrentFragment
-import com.mando.myweather.fragments.Daily
-import com.mando.myweather.fragments.Hourly
+import com.mando.MainActivityTabPagerAdapter
 import com.mando.myweather.location.FusedLocationDataStore
 import com.mando.myweather.location.LocationDataStore
-import com.mando.myweather.model.Current
-import com.mando.myweather.tabs.MainScreenTab
 import com.mando.myweather.utils.AndroidPermissionChecker
 import com.mando.myweather.utils.PermissionExaminer
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 private const val TAG = "MainActivity"
 private const val LOCATION_REQUEST_CODE = 99
-class MainActivity : AppCompatActivity(), MainScreenTab.View {
+class MainActivity : AppCompatActivity(){
 
     private  val locationDataStore: LocationDataStore?
         get() = FusedLocationDataStore.getInstance(application)
@@ -35,70 +27,18 @@ class MainActivity : AppCompatActivity(), MainScreenTab.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setToolBar()
-
-        navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        mainActivityViewPager.adapter = MainActivityTabPagerAdapter(this, supportFragmentManager)
+        mainActivityViewPager.offscreenPageLimit = 2
+        mainActivityTabs.setupWithViewPager(mainActivityViewPager)
         requestLocationPermission()
-        showCurrentFragment()
     }
 
     private fun setToolBar() {
         mainActivityToolbar.title = ""
         mainActivityToolbar.subtitle = ""
         val toolbarTitle = findViewById<TextView>(R.id.toolbarTitle)
-        toolbarTitle.text = getString(R.string.current_forecast)
+        toolbarTitle.text = getString(R.string.weather_forecast)
         setSupportActionBar(mainActivityToolbar)
-    }
-
-    private val mOnNavigationItemSelectedListener =
-        BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.currentTap -> {
-                    showCurrentFragment()
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.hourlyTap -> {
-                    showHourlyFragment()
-                    return@OnNavigationItemSelectedListener true
-
-                }
-                R.id.dailyTap -> {
-                    showDailyFragment()
-                    return@OnNavigationItemSelectedListener true
-
-                }
-                R.id.alertTap -> {
-                    showAlertFragment()
-                    return@OnNavigationItemSelectedListener true
-                }
-            }
-            false
-        }
-
-    override fun showCurrentFragment() {
-        val currentFragment = CurrentFragment.newInstance()
-        openFragment(currentFragment)
-
-    }
-
-    override fun showHourlyFragment() {
-        val hourlyFragment = Hourly.newInstance()
-        openFragment(hourlyFragment)
-    }
-
-    override fun showDailyFragment() {
-        val dailyFragment = Daily.newInstance()
-        openFragment(dailyFragment)
-    }
-
-    override fun showAlertFragment() {
-        val alertFragment = Alert.newInstance()
-        openFragment(alertFragment)
-    }
-
-    private fun openFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragmentFrame, fragment)
-        transaction.commit()
     }
 
     private fun requestLocationPermission() {

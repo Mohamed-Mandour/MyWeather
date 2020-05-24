@@ -9,10 +9,10 @@ import android.view.ViewGroup
 
 import com.mando.myweather.R
 
-class Alert : Fragment() {
+class DailyFragment : Fragment() {
 
     companion object {
-        fun newInstance() = Alert()
+        fun newInstance() = DailyFragment()
     }
 
     override fun onCreateView(
@@ -20,8 +20,6 @@ class Alert : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_alert, container, false)
+        return inflater.inflate(R.layout.fragment_daily, container, false)
     }
-
-
 }

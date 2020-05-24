@@ -9,10 +9,10 @@ import android.view.ViewGroup
 
 import com.mando.myweather.R
 
-class Hourly : Fragment() {
+class HourlyFragment : Fragment() {
 
     companion object {
-        fun newInstance() = Hourly()
+        fun newInstance() = HourlyFragment()
     }
 
     override fun onCreateView(
