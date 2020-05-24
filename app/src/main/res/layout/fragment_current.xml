@@ -31,7 +31,7 @@
     <TextView
             android:id="@+id/locationTimeZone"
             style="@style/Text"
-            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginTop="@dimen/standard_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -52,7 +52,7 @@
             style="@style/Text"
             android:textColor="@color/main_color"
             android:textSize="@dimen/text_size_4"
-            app:layout_constraintBottom_toTopOf="@+id/CurrentSummary"
+            app:layout_constraintBottom_toTopOf="@+id/currentSummary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -81,13 +81,15 @@
             android:id="@+id/lastTimeUpdated"
             style="@style/Text"
             android:layout_marginEnd="@dimen/margin_3"
-            app:layout_constraintBottom_toTopOf="@+id/whiteLine"
+            android:layout_marginTop="@dimen/margin_3"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currentSummary"
             tools:text="@string/lastUpdated" />
 
     <View
             android:id="@+id/whiteLine"
             style="@style/Divider"
+            android:layout_marginTop="@dimen/small_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
