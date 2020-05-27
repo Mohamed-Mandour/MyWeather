@@ -15,16 +15,25 @@ private const val PARTLY_CLOUD_NIGHT = "partly-cloudy-night"
 
 class Forecast {
     private var current: Current? = null
+    private var hourly: Array<Hourly?>? = null
 
     fun getCurrent(): Current? {
         return current
     }
 
-    fun setCurrent(mapCurrent: Current?) {
-        current = mapCurrent
+    fun getHourly(): Array<Hourly?>? {
+        return hourly
     }
 
-    fun getIconId(iconString: String): Int {
+    fun setCurrent(mappedCurrent: Current?) {
+        current = mappedCurrent
+    }
+
+    fun setHourly(mappedHourly: Array<Hourly?>) {
+        hourly = mappedHourly
+    }
+
+    fun getIconId(iconString: String?): Int {
         when (iconString) {
             RAIN -> { return R.drawable.ic_rain }
             SNOW -> { return R.drawable.ic_snow }
