@@ -27,9 +27,7 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setToolBar()
-        mainActivityViewPager.adapter = MainActivityTabPagerAdapter(this, supportFragmentManager)
-        mainActivityViewPager.offscreenPageLimit = 2
-        mainActivityTabs.setupWithViewPager(mainActivityViewPager)
+        setViewPager()
         requestLocationPermission()
     }
 
@@ -39,6 +37,12 @@ class MainActivity : AppCompatActivity(){
         val toolbarTitle = findViewById<TextView>(R.id.toolbarTitle)
         toolbarTitle.text = getString(R.string.weather_forecast)
         setSupportActionBar(mainActivityToolbar)
+    }
+
+    private fun setViewPager() {
+        mainActivityViewPager.adapter = MainActivityTabPagerAdapter(this, supportFragmentManager)
+        mainActivityViewPager.offscreenPageLimit = 2
+        mainActivityTabs.setupWithViewPager(mainActivityViewPager)
     }
 
     private fun requestLocationPermission() {

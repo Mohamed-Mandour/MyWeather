@@ -6,31 +6,19 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 
-class Current() : Parcelable {
-
-    var timezone: String = ""
-
-    var icon: String = ""
-
-    var time: Long = 0L
-
-    var summary: String = ""
-
-    var temperature: String = ""
-
-    var humidity: Double = 0.0
-
-    var pressure: Double = 0.0
-
-    var windSpeed: Double = 0.0
-
-    var cloudCover: Double = 0.0
-
-    var visibility: Double = 0.0
-
-
-    var precipProbability: Double = 0.0
-
+class Current(
+    var timezone: String?,
+    var icon: String?,
+    var time: Long,
+    var summary: String?,
+    var temperature: String?,
+    var humidity: Double,
+    var pressure: Double,
+    var windSpeed: Double,
+    var cloudCover: Double,
+    var visibility: Double,
+    var precipProbability: Double
+) : Parcelable {
     val getLastUpdated: String
         get() {
             val formatter = SimpleDateFormat("hh:mm a", Locale.getDefault())
@@ -38,16 +26,31 @@ class Current() : Parcelable {
         }
 
     val getDate: String
-    get() {
-        val formatter = SimpleDateFormat("d-MMM-yyyy", Locale.getDefault())
-        return formatTime(formatter)
-    }
+        get() {
+            val formatter = SimpleDateFormat("d-MMM-yyyy", Locale.getDefault())
+            return formatTime(formatter)
+        }
 
     val getIcon: Int
         get() {
             val forecast = Forecast()
             return forecast.getIconId(icon)
         }
+
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readLong(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readDouble()
+    ) {
+    }
 
     private fun formatTime(formatter: SimpleDateFormat): String {
         formatter.timeZone = TimeZone.getTimeZone(timezone)
@@ -56,21 +59,7 @@ class Current() : Parcelable {
     }
 
     fun getTemperature(): Int {
-        return (temperature.toDouble() - 32).roundToInt() * 5 / 9
-    }
-
-    constructor(parcel: Parcel) : this() {
-        timezone = parcel.readString().toString()
-        icon = parcel.readString().toString()
-        time = parcel.readLong()
-        summary = parcel.readString().toString()
-        temperature = parcel.readString().toString()
-        humidity = parcel.readDouble()
-        pressure = parcel.readDouble()
-        windSpeed = parcel.readDouble()
-        visibility = parcel.readDouble()
-        precipProbability = parcel.readDouble()
-        cloudCover = parcel.readDouble()
+        return ((temperature?.toDouble()?.minus(32))?.roundToInt()?.times(5) ?: 0) / 9
     }
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
@@ -82,9 +71,9 @@ class Current() : Parcelable {
         dest?.writeDouble(humidity)
         dest?.writeDouble(pressure)
         dest?.writeDouble(windSpeed)
+        dest?.writeDouble(cloudCover)
         dest?.writeDouble(visibility)
         dest?.writeDouble(precipProbability)
-        dest?.writeDouble(cloudCover)
     }
 
     override fun describeContents(): Int {
