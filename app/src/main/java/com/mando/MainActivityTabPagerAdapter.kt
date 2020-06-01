@@ -23,9 +23,9 @@ class MainActivityTabPagerAdapter(private val context: Context, fragmentManager:
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            FIRST_TAP -> CurrentFragment.newInstance()
-            SECOND_TAP -> HourlyFragment.newInstance()
-            else -> DailyFragment.newInstance()
+            FIRST_TAP -> CurrentFragment()
+            SECOND_TAP -> HourlyFragment()
+            else -> DailyFragment()
         }
     }
 

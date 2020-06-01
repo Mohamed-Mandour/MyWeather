@@ -5,6 +5,7 @@ import android.util.Log
 import com.mando.myweather.fragments.CurrentFragment
 import okhttp3.Cache
 import okhttp3.OkHttpClient
+import timber.log.Timber
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -16,7 +17,7 @@ class OkHttpClient(val context: Context) {
 
     private fun initOkHttpClient() {
         val cacheSize = 10 * 1024 * 1024 // 10 MiB
-        Log.d(TAG, "initOkHttpClient for OKHTTP")
+        Timber.d("initOkHttpClient for OKHTTP")
         sOkHttpClient = OkHttpClient()
         sOkHttpClient = sOkHttpClient?.newBuilder()
             ?.readTimeout(30, TimeUnit.SECONDS)

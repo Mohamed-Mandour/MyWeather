@@ -2,26 +2,34 @@ package com.mando.myweather
 
 import android.app.AlertDialog
 import android.content.pm.PackageManager
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.mando.MainActivityTabPagerAdapter
+import com.mando.myweather.background.ForecastJson
+import com.mando.myweather.fragments.CurrentFragment
+import com.mando.myweather.impl.ParseForecast
 import com.mando.myweather.location.FusedLocationDataStore
 import com.mando.myweather.location.LocationDataStore
+import com.mando.myweather.model.Current
 import com.mando.myweather.utils.AndroidPermissionChecker
 import com.mando.myweather.utils.PermissionExaminer
 import kotlinx.android.synthetic.main.activity_main.*
-
+import timber.log.Timber
+import java.lang.ref.WeakReference
 
 private const val TAG = "MainActivity"
 private const val LOCATION_REQUEST_CODE = 99
-class MainActivity : AppCompatActivity(){
 
-    private  val locationDataStore: LocationDataStore?
+class MainActivity : AppCompatActivity() {
+
+    private val locationDataStore: LocationDataStore?
         get() = FusedLocationDataStore.getInstance(application)
+
+    private var current: Current? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +37,7 @@ class MainActivity : AppCompatActivity(){
         setToolBar()
         setViewPager()
         requestLocationPermission()
+        FetchForecastTask(this).execute()
     }
 
     private fun setToolBar() {
@@ -48,7 +57,7 @@ class MainActivity : AppCompatActivity(){
     private fun requestLocationPermission() {
         val permissionChecker: PermissionExaminer = AndroidPermissionChecker(application)
         val hasAnyLocationPermissions = permissionChecker.hasAnyLocationPermissions
-        Log.d(TAG, "hasAnyLocationPermissions: $hasAnyLocationPermissions")
+        Timber.d( "hasAnyLocationPermissions: $hasAnyLocationPermissions")
         if (!hasAnyLocationPermissions) {
             makeLocationPermissionRequest()
         }
@@ -72,7 +81,7 @@ class MainActivity : AppCompatActivity(){
         builder.setPositiveButton(
             "OK"
         ) { _, _ ->
-            Log.i(TAG, "Clicked")
+            Timber.i("Clicked")
             makeLocationPermissionRequest()
         }
 
@@ -108,6 +117,28 @@ class MainActivity : AppCompatActivity(){
                     locationDataStore?.location
                 }
             }
+        }
+    }
+
+    private class FetchForecastTask(val mainActivity: MainActivity) :
+        AsyncTask<Void?, Void?, String>() {
+
+        private val activityReference: WeakReference<MainActivity> =
+            WeakReference(mainActivity)
+
+        override fun doInBackground(vararg params: Void?): String? {
+            return activityReference.let { mainActivity.let { it1 -> ForecastJson(it1).getForecastJson() } }
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            val parseForecast = ParseForecast(result)
+            val forecast = parseForecast.parseForecastJson()
+            val current = forecast.getCurrent()
+            CurrentFragment.newInstance(
+                mainActivity.supportFragmentManager.beginTransaction(),
+                current
+            )
         }
     }
 }
