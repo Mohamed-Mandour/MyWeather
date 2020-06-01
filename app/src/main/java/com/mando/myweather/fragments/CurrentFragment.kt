@@ -13,6 +13,7 @@ import com.mando.myweather.model.Current
 import com.mando.myweather.mvp.CurrentScreenContract
 import com.mando.myweather.mvp.CurrentScreenPresenter
 import kotlinx.android.synthetic.main.fragment_current.*
+import timber.log.Timber
 
 private const val TAG = "CurrentFragment"
 
@@ -27,7 +28,7 @@ class CurrentFragment : Fragment(), CurrentScreenContract.View{
             bundle.putParcelable("KEY", current)
             currentFragment.arguments = bundle
             fragmentManager.replace(R.id.mainActivityViewPager, currentFragment).commit()
-            Log.d(TAG, "bundle: ${bundle.getParcelable<Current>("KEY")}")
+            Timber.d( "bundle: ${bundle.getParcelable<Current>("KEY")}")
             return currentFragment
         }
     }
@@ -37,7 +38,7 @@ class CurrentFragment : Fragment(), CurrentScreenContract.View{
         retainInstance = true
         presenter = CurrentScreenPresenter(this)
         val current = arguments?.getParcelable<Current>("KEY")
-        Log.d(TAG, "current: ${current?.temperature}")
+        Timber.d("current: ${current?.temperature}")
     }
 
     override fun onCreateView(

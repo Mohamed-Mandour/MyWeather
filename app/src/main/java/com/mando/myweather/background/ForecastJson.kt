@@ -10,6 +10,7 @@ import okhttp3.Request
 import okhttp3.Response
 import org.json.JSONException
 import org.json.JSONObject
+import timber.log.Timber
 
 private const val TAG = "ForecastJsonTask"
 
@@ -23,14 +24,14 @@ class ForecastJson(private val context: Context) {
         val location = locationDataStore?.location
         val forecastUrl = ForecastUrlImpl()
         val request: Request = Request.Builder().url(forecastUrl.darkSkyForecastUrl).build()
-        Log.d(TAG, "forecast url: $ request $request")
+        Timber.d("forecast url: $ request $request")
         try {
             val response: Response =
                 OkHttpClient(context).getHTTPClient()!!.newCall(request).execute()
             forecastJson = JSONObject(response.body?.string()).toString()
-            Log.d(TAG, "forecastJson $forecastJson")
+            Timber.d("forecastJson $forecastJson")
         } catch (e: JSONException) {
-            Log.e(TAG, "JSONException ${e.message}")
+            Timber.e("JSONException ${e.message}")
         }
 
         return forecastJson

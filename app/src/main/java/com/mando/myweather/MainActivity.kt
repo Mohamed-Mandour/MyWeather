@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -19,6 +18,7 @@ import com.mando.myweather.model.Current
 import com.mando.myweather.utils.AndroidPermissionChecker
 import com.mando.myweather.utils.PermissionExaminer
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 import java.lang.ref.WeakReference
 
 private const val TAG = "MainActivity"
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     private fun requestLocationPermission() {
         val permissionChecker: PermissionExaminer = AndroidPermissionChecker(application)
         val hasAnyLocationPermissions = permissionChecker.hasAnyLocationPermissions
-        Log.d(TAG, "hasAnyLocationPermissions: $hasAnyLocationPermissions")
+        Timber.d( "hasAnyLocationPermissions: $hasAnyLocationPermissions")
         if (!hasAnyLocationPermissions) {
             makeLocationPermissionRequest()
         }
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         builder.setPositiveButton(
             "OK"
         ) { _, _ ->
-            Log.i(TAG, "Clicked")
+            Timber.i("Clicked")
             makeLocationPermissionRequest()
         }
 
