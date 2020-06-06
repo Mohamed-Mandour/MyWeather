@@ -1,7 +1,6 @@
 package com.mando.myweather.background
 
 import android.content.Context
-import android.util.Log
 import com.mando.myweather.impl.ForecastUrlImpl
 import com.mando.myweather.location.FusedLocationDataStore
 import com.mando.myweather.location.LocationDataStore
@@ -11,8 +10,6 @@ import okhttp3.Response
 import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
-
-private const val TAG = "ForecastJsonTask"
 
 class ForecastJson(private val context: Context) {
 
