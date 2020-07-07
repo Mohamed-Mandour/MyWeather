@@ -1,35 +1,27 @@
 package com.mando.myweather.fragments
 
 import android.graphics.drawable.Drawable
+import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.mando.myweather.R
-import com.mando.myweather.model.Current
+import com.mando.myweather.background.ForecastJson
+import com.mando.myweather.impl.ParseForecast
 import com.mando.myweather.mvp.CurrentScreenContract
 import com.mando.myweather.mvp.CurrentScreenPresenter
 import kotlinx.android.synthetic.main.fragment_current.*
-import timber.log.Timber
-
-private const val TAG = "CurrentFragment"
+import java.lang.ref.WeakReference
 
 class CurrentFragment : Fragment(), CurrentScreenContract.View{
 
     private lateinit var presenter: CurrentScreenContract.Presenter
 
     companion object {
-        fun newInstance(fragmentManager: FragmentTransaction, current: Current?): CurrentFragment {
-            val currentFragment = CurrentFragment()
-            val bundle = Bundle()
-            bundle.putParcelable("KEY", current)
-            currentFragment.arguments = bundle
-            fragmentManager.replace(R.id.mainActivityViewPager, currentFragment).commit()
-            Timber.d( "bundle: ${bundle.getParcelable<Current>("KEY")}")
-            return currentFragment
+        fun newInstance(): CurrentFragment {
+            return   CurrentFragment()
         }
     }
 
@@ -37,8 +29,7 @@ class CurrentFragment : Fragment(), CurrentScreenContract.View{
         super.onCreate(savedInstanceState)
         retainInstance = true
         presenter = CurrentScreenPresenter(this)
-        val current = arguments?.getParcelable<Current>("KEY")
-        Timber.d("current: ${current?.temperature}")
+        FetchForecastTask(this).execute()
     }
 
     override fun onCreateView(
@@ -156,5 +147,28 @@ class CurrentFragment : Fragment(), CurrentScreenContract.View{
 
     override fun showCloudCoverValue(cloudCover: String?) {
         cloudCoverValue.text = cloudCover
+    }
+
+    private class FetchForecastTask(val fragment: CurrentFragment) :
+        AsyncTask<Void?, Void?, String>() {
+
+        private val weakReference: WeakReference<CurrentFragment> =
+            WeakReference(fragment)
+
+        override fun doInBackground(vararg params: Void?): String? {
+            return weakReference.let { fragment.activity.let { it1 -> it1?.let { it2 ->
+                ForecastJson(
+                    it2
+                ).getForecastJson()
+            } } }
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            val parseForecast = ParseForecast(result)
+            val forecast = parseForecast.parseForecastJson()
+            val current = forecast.getCurrent()
+            fragment.presenter.setCurrentForecast(current)
+        }
     }
 }

@@ -48,4 +48,20 @@ class Forecast {
         }
         return R.drawable.ic_clear_day
     }
+
+    fun getHourlyIconId(iconString: String?): Int {
+        when (iconString) {
+            RAIN -> { return R.drawable.hourly_ic_rain }
+            SNOW -> { return R.drawable.hourly_ic_snow }
+            SLEET -> { return R.drawable.hourly_ic_sleet }
+            WIND -> { return R.drawable.hourly_ic_wind }
+            FOG -> { return R.drawable.hourly_ic_fog }
+            CLOUDY -> { return R.drawable.hourly_ic_cloud }
+            CLEAR_DAY -> { return R.drawable.hourly_ic_clear_day }
+            CLEAR_Night -> { return R.drawable.hourly_ic_clear_night }
+            PARTLY_CLOUD_DAY -> { return R.drawable.hourly_ic_cloud }
+            PARTLY_CLOUD_NIGHT -> { return R.drawable.hourly_ic_cloudy_night }
+        }
+        return R.drawable.hourly_ic_clear_day
+    }
 }

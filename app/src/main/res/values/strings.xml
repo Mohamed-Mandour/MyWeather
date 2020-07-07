@@ -21,4 +21,5 @@
     <string name="humidity">Humidity</string>
     <string name="humidityValue">0.42</string>
     <string name="cloud_cover">Cloud Cover</string>
+    <string name="temperature">Temperature</string>
 </resources>
