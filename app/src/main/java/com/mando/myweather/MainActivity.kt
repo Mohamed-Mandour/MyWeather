@@ -4,11 +4,10 @@ import android.app.AlertDialog
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import com.mando.MainActivityTabPagerAdapter
+import com.mando.adpater.MainActivityTabPagerAdapter
 import com.mando.myweather.location.FusedLocationDataStore
 import com.mando.myweather.location.LocationDataStore
 import com.mando.myweather.utils.AndroidPermissionChecker
@@ -40,7 +39,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setViewPager() {
-        mainActivityViewPager.adapter = MainActivityTabPagerAdapter(this, supportFragmentManager)
+        mainActivityViewPager.adapter =
+            MainActivityTabPagerAdapter(
+                this,
+                supportFragmentManager
+            )
         mainActivityViewPager.offscreenPageLimit = 2
         mainActivityTabs.setupWithViewPager(mainActivityViewPager)
     }

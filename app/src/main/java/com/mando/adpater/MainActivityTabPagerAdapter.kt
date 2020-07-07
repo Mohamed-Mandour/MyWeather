@@ -1,4 +1,4 @@
-package com.mando
+package com.mando.adpater
 
 import android.content.Context
 import androidx.fragment.app.Fragment
