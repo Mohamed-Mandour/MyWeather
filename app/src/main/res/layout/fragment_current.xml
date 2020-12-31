@@ -15,7 +15,7 @@
             app:layout_constraintHorizontal_bias="0.058"
             app:layout_constraintStart_toEndOf="@+id/locationTimeZone"
             app:layout_constraintTop_toTopOf="@+id/locationTimeZone"
-            tools:src="@drawable/ic_signs" />
+            android:src="@drawable/ic_signs" />
 
     <ImageView
             android:id="@+id/iconWeather"
@@ -25,7 +25,7 @@
             app:layout_constraintEnd_toStartOf="@+id/temp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/locationTimeZone"
-            tools:src="@drawable/ic_clear" />
+            android:src="@drawable/ic_clear" />
 
     <TextView
             android:id="@+id/locationTimeZone"
@@ -44,7 +44,7 @@
             app:layout_constraintHorizontal_bias="0.638"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/locationTimeZone"
-            tools:srcCompat="@drawable/ic_celsius_degrees_symbol_of_temperature" />
+            android:src="@drawable/ic_celsius_degrees_symbol_of_temperature" />
 
     <TextView
         android:id="@+id/temp"
@@ -92,7 +92,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/currentDay"
-            tools:background="@color/main_color" />
+            android:background="@color/main_color" />
 
     <ImageView
             android:id="@+id/precipitationImage"
@@ -102,7 +102,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/windImage"
             app:layout_constraintTop_toTopOf="@+id/windImage"
-            tools:src="@drawable/ic_precipitation" />
+            android:src="@drawable/ic_precipitation" />
 
     <ImageView
             android:id="@+id/windImage"
@@ -113,7 +113,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/pressureImage"
             app:layout_constraintTop_toBottomOf="@+id/whiteLine"
-            tools:src="@drawable/ic_fan" />
+            android:src="@drawable/ic_fan" />
 
     <ImageView
             android:id="@+id/pressureImage"
@@ -123,7 +123,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/windImage"
-            tools:src="@drawable/ic_pressure" />
+            android:src="@drawable/ic_pressure" />
 
 
     <TextView
@@ -136,7 +136,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/windImage"
             app:layout_constraintTop_toBottomOf="@+id/windImage"
-            tools:text="@string/wind" />
+            android:text="@string/wind" />
 
     <TextView
             android:id="@+id/pressureTextView"
@@ -147,7 +147,7 @@
             app:layout_constraintEnd_toEndOf="@+id/pressureImage"
             app:layout_constraintStart_toStartOf="@+id/pressureImage"
             app:layout_constraintTop_toBottomOf="@+id/pressureImage"
-            tools:text="@string/pressure" />
+            android:text="@string/pressure" />
 
     <TextView
             android:id="@+id/precipitationTextView"
@@ -158,7 +158,7 @@
             app:layout_constraintEnd_toEndOf="@+id/precipitationImage"
             app:layout_constraintStart_toStartOf="@+id/precipitationImage"
             app:layout_constraintTop_toBottomOf="@+id/precipitationImage"
-            tools:text="@string/precipitation" />
+            android:text="@string/precipitation" />
 
 
     <TextView
@@ -206,7 +206,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/humidityImageView"
             app:layout_constraintTop_toBottomOf="@+id/windValue"
-            tools:src="@drawable/ic_eye" />
+            android:src="@drawable/ic_eye" />
 
     <ImageView
             android:id="@+id/cloudCoverImage"
@@ -216,7 +216,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/visibilityImage"
             app:layout_constraintTop_toTopOf="@+id/visibilityImage"
-            tools:src="@drawable/ic_cloud" />
+            android:src="@drawable/ic_cloud" />
 
     <ImageView
             android:id="@+id/humidityImageView"
@@ -226,7 +226,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/visibilityImage"
-            tools:src="@drawable/ic_humidity" />
+            android:src="@drawable/ic_humidity" />
 
     <TextView
             android:id="@+id/visibilityTextView"
@@ -237,7 +237,7 @@
             app:layout_constraintEnd_toEndOf="@+id/visibilityImage"
             app:layout_constraintStart_toStartOf="@+id/visibilityImage"
             app:layout_constraintTop_toBottomOf="@+id/visibilityImage"
-            tools:text="@string/visibility" />
+            android:text="@string/visibility" />
 
     <TextView
             android:id="@+id/humidityTextView"
@@ -248,7 +248,7 @@
             app:layout_constraintEnd_toEndOf="@+id/humidityImageView"
             app:layout_constraintStart_toStartOf="@+id/humidityImageView"
             app:layout_constraintTop_toBottomOf="@+id/humidityImageView"
-            tools:text="@string/humidity" />
+            android:text="@string/humidity" />
 
     <TextView
             android:id="@+id/cloudTextView"
@@ -256,7 +256,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
-            tools:text="@string/cloud_cover"
+            android:text="@string/cloud_cover"
             app:layout_constraintEnd_toEndOf="@+id/cloudCoverImage"
             app:layout_constraintStart_toStartOf="@+id/cloudCoverImage"
             app:layout_constraintTop_toBottomOf="@+id/cloudCoverImage" />
