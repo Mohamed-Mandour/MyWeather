@@ -1,15 +1,15 @@
-package com.mando.adpater
+package com.mando.weatherforecast.adpater
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mando.myweather.R
-import com.mando.myweather.model.Hourly
+import com.mando.weatherforecast.R
+import com.mando.weatherforecast.model.HourlyResponse
 import kotlinx.android.synthetic.main.daily_recycle_item.view.*
 import timber.log.Timber
 
-class HourlyRecyclerViewAdapter(private val hourlyList: Array<Hourly?>?) :
+class HourlyRecyclerViewAdapter(private val hourlyList: Array<HourlyResponse?>?) :
     RecyclerView.Adapter<HourlyRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,7 +27,7 @@ class HourlyRecyclerViewAdapter(private val hourlyList: Array<Hourly?>?) :
     }
 
     class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(hourly: Hourly?) {
+        fun bind(hourly: HourlyResponse?) {
             Timber.d("HourlyRecyclerViewAdapter ViewHolder called()")
             view.time.text = hourly?.time.toString()
         }

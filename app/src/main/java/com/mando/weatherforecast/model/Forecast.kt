@@ -1,6 +1,6 @@
-package com.mando.myweather.model
+package com.mando.weatherforecast.model
 
-import com.mando.myweather.R
+import com.mando.weatherforecast.R
 
 private const val CLEAR_DAY = "clear-day"
 private const val CLEAR_Night = "clear-night"
@@ -14,22 +14,22 @@ private const val PARTLY_CLOUD_DAY = "partly-cloudy-day"
 private const val PARTLY_CLOUD_NIGHT = "partly-cloudy-night"
 
 class Forecast {
-    private var current: Current? = null
-    private var hourly: Array<Hourly?>? = null
+    private var currentResponse: CurrentResponse? = null
+    private var hourly: Array<HourlyResponse?>? = null
 
-    fun getCurrent(): Current? {
-        return current
+    fun getCurrent(): CurrentResponse? {
+        return currentResponse
     }
 
-    fun getHourly(): Array<Hourly?>? {
+    fun getHourly(): Array<HourlyResponse?>? {
         return hourly
     }
 
-    fun setCurrent(mappedCurrent: Current?) {
-        current = mappedCurrent
+    fun setCurrent(mappedCurrentResponse: CurrentResponse?) {
+        currentResponse = mappedCurrentResponse
     }
 
-    fun setHourly(mappedHourly: Array<Hourly?>) {
+    fun setHourly(mappedHourly: Array<HourlyResponse?>) {
         hourly = mappedHourly
     }
 

@@ -1,4 +1,4 @@
-package com.mando.myweather.utils
+package com.mando.weatherforecast.utils
 
 import android.Manifest
 import android.content.Context

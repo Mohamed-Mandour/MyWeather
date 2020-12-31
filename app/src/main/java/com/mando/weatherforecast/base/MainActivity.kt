@@ -1,4 +1,4 @@
-package com.mando.myweather
+package com.mando.weatherforecast.base
 
 import android.app.AlertDialog
 import android.content.pm.PackageManager
@@ -7,27 +7,28 @@ import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import com.mando.adpater.MainActivityTabPagerAdapter
-import com.mando.myweather.location.FusedLocationDataStore
-import com.mando.myweather.location.LocationDataStore
-import com.mando.myweather.utils.AndroidPermissionChecker
-import com.mando.myweather.utils.PermissionExaminer
+import com.mando.weatherforecast.R
+import com.mando.weatherforecast.adpater.MainActivityTabPagerAdapter
+import com.mando.weatherforecast.location.FusedLocationDataStore
+import com.mando.weatherforecast.location.LocationDataStore
+import com.mando.weatherforecast.utils.AndroidPermissionChecker
+import com.mando.weatherforecast.utils.PermissionExaminer
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
 private const val LOCATION_REQUEST_CODE = 99
 
 class MainActivity : AppCompatActivity() {
-
     private val locationDataStore: LocationDataStore?
         get() = FusedLocationDataStore.getInstance(application)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        requestLocationPermission()
         setToolBar()
         setViewPager()
-        requestLocationPermission()
+
     }
 
     private fun setToolBar() {

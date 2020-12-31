@@ -1,4 +1,4 @@
-package com.mando.myweather.fragments
+package com.mando.weatherforecast.fragments
 
 
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.mando.myweather.R
+import com.mando.weatherforecast.R
 
 class DailyFragment : Fragment() {
 

@@ -1,13 +1,12 @@
-package com.mando.myweather.location
+package com.mando.weatherforecast.location
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Looper
-import android.util.Log
 import androidx.annotation.VisibleForTesting
 import com.google.android.gms.location.*
-import com.mando.myweather.utils.AndroidPermissionChecker
-import com.mando.myweather.utils.PermissionExaminer
+import com.mando.weatherforecast.utils.AndroidPermissionChecker
+import com.mando.weatherforecast.utils.PermissionExaminer
 import timber.log.Timber
 
 private const val DEFAULT_INTERVAL = 0L
@@ -28,7 +27,7 @@ object FusedLocationDataStore : LocationDataStore {
                 Timber.w("Location is null. Returning")
                 return
             }
-            mLocation = DeviceLocation(locationResult.lastLocation)
+            mLocation = DeviceLocation(locationResult.lastLocation.latitude, locationResult.lastLocation.longitude, locationResult.lastLocation.provider)
         }
     }
 
@@ -46,6 +45,7 @@ object FusedLocationDataStore : LocationDataStore {
             return mLocation
         }
 
+    @SuppressLint("MissingPermission")
     override fun requestNewLocation() {
         if (mPermissionExaminer?.hasAnyLocationPermissions == false) {
             Timber.w("Cannot request a new location as we don't have permission.")
@@ -63,6 +63,7 @@ object FusedLocationDataStore : LocationDataStore {
         true -> createSingleLocationRequestHighAccuracy()
         else -> createSingleLocationRequestBalancedPower()
     }
+
     private fun createSingleLocationRequestHighAccuracy() =
         createLocationRequest(LocationRequest.PRIORITY_HIGH_ACCURACY)
 
@@ -80,10 +81,11 @@ object FusedLocationDataStore : LocationDataStore {
         }
     }
 
-    @SuppressLint("MissingPermission")
+    @SuppressLint("MissingPermission", "BinaryOperationInTimber")
     @VisibleForTesting
     fun updateLastLocation() {
-        Timber.d("updateLastLocation() called" +
+        Timber.d(
+            "updateLastLocation() called" +
                     " From thread: " + Thread.currentThread().id +
                     " isMainThread [" + (Looper.myLooper() == Looper.getMainLooper()) + "]"
         )
@@ -91,24 +93,30 @@ object FusedLocationDataStore : LocationDataStore {
             Timber.d("No Location permission granted")
             return
         }
-        val lastLocationTask =
-            mFusedLocationClient!!.lastLocation
-        lastLocationTask.addOnCompleteListener {
-            if (lastLocationTask.isSuccessful) {
-                val location = lastLocationTask.result
-                if (location != null) {
-                    mLocation = DeviceLocation(location)
+        try {
+            val lastLocationTask =
+                mFusedLocationClient!!.lastLocation
+            lastLocationTask.addOnCompleteListener {
+                if (lastLocationTask.isSuccessful) {
+                    val location = lastLocationTask.result
+                    if (location != null) {
+                        mLocation = DeviceLocation(location.latitude, location.latitude, location.provider)
+                    }
                 }
-            } else {
-                Timber.d( "Location is null")
+                lastLocationTask?.addOnFailureListener {
+                    Timber.d("Location can not be obtain")
+                }
             }
+
+        } catch (e: Exception) {
+            Timber.d(e)
         }
     }
 
     fun getInstance(context: Context?): FusedLocationDataStore? {
         val fusedLocationDataStore = InstanceHolder.sInstance
-        if (fusedLocationDataStore.mFusedLocationClient == null) {
-            fusedLocationDataStore.initialize(context)
+        if (mFusedLocationClient == null) {
+            initialize(context)
         }
         return fusedLocationDataStore
     }

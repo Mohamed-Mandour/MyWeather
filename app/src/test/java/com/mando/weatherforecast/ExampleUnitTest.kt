@@ -1,4 +1,4 @@
-package com.mando.myweather
+package com.mando.weatherforecast
 
 import org.junit.Test
 
