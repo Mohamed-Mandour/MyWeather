@@ -1,4 +1,4 @@
-package com.mando.myweather
+package com.mando.weatherforecast
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4

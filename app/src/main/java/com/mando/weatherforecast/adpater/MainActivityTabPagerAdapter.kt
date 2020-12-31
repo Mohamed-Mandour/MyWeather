@@ -1,13 +1,13 @@
-package com.mando.adpater
+package com.mando.weatherforecast.adpater
 
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.mando.myweather.R
-import com.mando.myweather.fragments.CurrentFragment
-import com.mando.myweather.fragments.DailyFragment
-import com.mando.myweather.fragments.HourlyFragment
+import com.mando.weatherforecast.R
+import com.mando.weatherforecast.fragments.CurrentFragment
+import com.mando.weatherforecast.fragments.DailyFragment
+import com.mando.weatherforecast.fragments.HourlyFragment
 
 private const val FIRST_TAP = 0
 private const val SECOND_TAP = 1
