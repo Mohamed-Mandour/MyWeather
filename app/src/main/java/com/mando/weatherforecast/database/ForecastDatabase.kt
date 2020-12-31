@@ -8,7 +8,6 @@ import androidx.room.TypeConverters
 import com.mando.weatherforecast.model.CurrentResponse
 
 @Database(entities = [CurrentResponse::class], version = 1)
-@TypeConverters(GenreIdConverter::class)
 abstract class ForecastDatabase: RoomDatabase() {
 
     abstract fun forecastDao(): ForecastDao
