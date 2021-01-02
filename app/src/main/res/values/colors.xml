@@ -12,5 +12,5 @@
     <color name="orange">#FF9800</color>
     <color name="fade">#CABFBB</color>
     <color name="bg_dark">#1D253E</color>
-
+    <color name="holo_red">#ffcc0000</color>
 </resources>

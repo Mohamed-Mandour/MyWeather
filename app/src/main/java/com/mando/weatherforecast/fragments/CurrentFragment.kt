@@ -1,5 +1,7 @@
 package com.mando.weatherforecast.fragments
 
+import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,17 +10,27 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.mando.weatherforecast.R
-import com.mando.weatherforecast.utils.currentDateFormatter
-import com.mando.weatherforecast.utils.formatTime
-import com.mando.weatherforecast.utils.getTemperatureValue
-import com.mando.weatherforecast.utils.lastUpdatedFormatter
+import com.mando.weatherforecast.network.NetworkStatusChecker
+import com.mando.weatherforecast.utils.*
 import com.mando.weatherforecast.viewModel.CurrentViewModel
 import com.mando.weatherforecast.viewModel.CurrentViewModelFactory
+import kotlinx.android.synthetic.main.dailog_custom.*
 import kotlinx.android.synthetic.main.fragment_current.*
+
+private const val NO_CONNECTION_DIALOG = "NoConnectionDialog"
 
 class CurrentFragment : Fragment() {
 
     private lateinit var viewModel: CurrentViewModel
+
+    private val networkStatusChecker: NetworkStatusChecker?
+        get() {
+            return if (Build.VERSION.SDK_INT >= 23) {
+                NetworkStatusChecker(activity?.getSystemService(ConnectivityManager::class.java))
+            } else {
+                return null
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +40,12 @@ class CurrentFragment : Fragment() {
             val currentViewModelFactory = CurrentViewModelFactory(context)
             viewModel = ViewModelProviders.of(this, currentViewModelFactory)
                 .get(CurrentViewModel::class.java)
-            showCurrentWeather(viewModel)
+            if (networkStatusChecker?.hasInternetConnection() == false) {
+                onConnectionDialog()
+            }
+            networkStatusChecker?.checkConnectionToInternet {
+                showCurrentWeather(viewModel)
+            }
         }
     }
 
@@ -37,6 +54,15 @@ class CurrentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_current, container, false)
+    }
+
+    private fun onConnectionDialog() {
+        activity?.supportFragmentManager?.let {
+            NoConnectionDialog().show(
+                it,
+                NO_CONNECTION_DIALOG
+            )
+        }
     }
 
     private fun showCurrentWeather(viewModel: CurrentViewModel) {

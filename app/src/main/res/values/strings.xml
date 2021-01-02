@@ -22,4 +22,7 @@
     <string name="humidityValue">0.42</string>
     <string name="cloud_cover">Cloud Cover</string>
     <string name="temperature">Temperature</string>
+    <string name="please_try_later">Please try later</string>
+    <string name="no_internet_connection_message">It seems you do not have an internet connection , please try to connect to the internet before checking the weather.</string>
+    <string name="no_internet_connection">No Internet Connection</string>
 </resources>
