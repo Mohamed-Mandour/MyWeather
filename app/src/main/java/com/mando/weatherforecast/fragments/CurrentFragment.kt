@@ -6,15 +6,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.airbnb.lottie.LottieAnimationView
 import com.mando.weatherforecast.R
 import com.mando.weatherforecast.network.NetworkStatusChecker
 import com.mando.weatherforecast.utils.*
 import com.mando.weatherforecast.viewModel.CurrentViewModel
 import com.mando.weatherforecast.viewModel.CurrentViewModelFactory
-import kotlinx.android.synthetic.main.dailog_custom.*
 import kotlinx.android.synthetic.main.fragment_current.*
 
 private const val NO_CONNECTION_DIALOG = "NoConnectionDialog"
@@ -22,7 +23,7 @@ private const val NO_CONNECTION_DIALOG = "NoConnectionDialog"
 class CurrentFragment : Fragment() {
 
     private lateinit var viewModel: CurrentViewModel
-
+    private val iconUtils: IconUtils = IconUtils()
     private val networkStatusChecker: NetworkStatusChecker?
         get() {
             return if (Build.VERSION.SDK_INT >= 23) {
@@ -40,11 +41,11 @@ class CurrentFragment : Fragment() {
             val currentViewModelFactory = CurrentViewModelFactory(context)
             viewModel = ViewModelProviders.of(this, currentViewModelFactory)
                 .get(CurrentViewModel::class.java)
-            if (networkStatusChecker?.hasInternetConnection() == false) {
-                onConnectionDialog()
-            }
             networkStatusChecker?.checkConnectionToInternet {
                 showCurrentWeather(viewModel)
+            }
+            if (networkStatusChecker?.hasInternetConnection() == false) {
+                onConnectionDialog()
             }
         }
     }
@@ -54,6 +55,18 @@ class CurrentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_current, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val spinnerView: LottieAnimationView = view.findViewById(R.id.spinner_animation_view)
+        val temperature = view.findViewById<TextView>(R.id.temp)
+        if (temperature.text.isEmpty() || temperature.text == null) {
+            spinnerView.visibility = View.VISIBLE
+            spinnerView.setOnClickListener { showCurrentWeather(viewModel)}
+        } else {
+            spinnerView.pauseAnimation()
+        }
     }
 
     private fun onConnectionDialog() {
@@ -77,6 +90,7 @@ class CurrentFragment : Fragment() {
             humidityValue.text = current.humidity.toString()
             visibilityValue.text = current.visibility.toString()
             time = current.time
+            iconWeather.setImageResource(iconUtils.getIconId(current.icon))
         })
 
         viewModel.getTimeZone().observe(this, Observer { timeZone ->
