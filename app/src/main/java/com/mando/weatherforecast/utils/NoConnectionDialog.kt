@@ -22,5 +22,4 @@ class NoConnectionDialog : DialogFragment() {
         dialog!!.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
         try_later.setOnClickListener {dismiss()}
     }
-
 }
