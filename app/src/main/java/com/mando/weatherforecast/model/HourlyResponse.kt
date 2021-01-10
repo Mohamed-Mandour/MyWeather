@@ -7,16 +7,22 @@ import com.google.gson.annotations.SerializedName
 
 @Entity
 data class HourlyResponse (
+
     @SerializedName("id")
     @PrimaryKey
     @Expose
     var id: Long,
-    val icon: String?,
-    val time: Long,
+
+    @SerializedName("summary")
+    @Expose
     val summary: String?,
-    val temperature: Double,
-    val precipProbability: Double,
-    val humidity: Double,
-    val windSpeed: Double
+
+    @SerializedName("icon")
+    @Expose
+    val icon: String?,
+
+    @SerializedName("data")
+    @Expose
+    val data: MutableList<CurrentResponse>
 )
 
