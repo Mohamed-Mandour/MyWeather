@@ -10,7 +10,6 @@
         <item name="android:colorBackground">@color/background_color</item>
         <item name="android:textColor">@color/white</item>
         <item name="colorError">@color/colorAccent</item>
-        <item name="fontFamily">@font/sriracha</item>
     </style>
 
     <style name="Text">
