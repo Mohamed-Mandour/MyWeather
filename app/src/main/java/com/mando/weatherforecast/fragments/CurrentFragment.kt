@@ -33,17 +33,26 @@ class CurrentFragment : Fragment() {
             }
         }
 
+    companion object {
+        fun newInstance(): CurrentFragment {
+            return CurrentFragment()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
         val context = activity?.applicationContext
         if (context != null) {
             val currentViewModelFactory = CurrentViewModelFactory(context)
+
             viewModel = ViewModelProviders.of(this, currentViewModelFactory)
                 .get(CurrentViewModel::class.java)
+
             networkStatusChecker?.checkConnectionToInternet {
                 showCurrentWeather(viewModel)
             }
+
             if (networkStatusChecker?.hasInternetConnection() == false) {
                 onConnectionDialog()
             }
@@ -95,8 +104,8 @@ class CurrentFragment : Fragment() {
 
         viewModel.getTimeZone().observe(this, Observer { timeZone ->
             locationTimeZone.text = timeZone
-            currentDay.text = formatTime(currentDateFormatter, timeZone, time)
-            lastTimeUpdated.text = formatTime(lastUpdatedFormatter, timeZone, time)
+            currentDay.text = formatTime(dailyDateFormatter, timeZone, time)
+            lastTimeUpdated.text = formatTime(hourlyDateFormatter, timeZone, time)
         })
     }
 }

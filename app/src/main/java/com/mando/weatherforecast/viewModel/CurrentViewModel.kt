@@ -14,8 +14,7 @@ class CurrentViewModel(context: Context) : ViewModel() {
     private val repository: ForecastRepository = ForecastRepositoryImpl(context)
 
     fun getCurrentForecast(): LiveData<CurrentResponse> {
-        Timber.d("getSavedCurrentForecast: values ${repository.getSavedCurrentForecast()}")
-        return repository.getSavedCurrentForecast()
+        return repository.getCurrentForecast()
     }
 
     fun getTimeZone(): LiveData<String> {
