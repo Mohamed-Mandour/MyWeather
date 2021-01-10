@@ -19,7 +19,8 @@ class MyApplication : Application() {
 
         instance = this
         db = ForecastDatabase.getInstance(this)
-        FusedLocationDataStore.getInstance(instance)
+        val location = FusedLocationDataStore.getInstance(instance)
+        location?.getLastLocation()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
