@@ -5,9 +5,11 @@ import android.content.Context
 import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import com.google.android.gms.location.*
+import com.google.android.gms.tasks.Tasks
 import com.mando.weatherforecast.utils.AndroidPermissionChecker
 import com.mando.weatherforecast.utils.PermissionExaminer
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 private const val DEFAULT_INTERVAL = 0L
 const val TAG = "FusedLocationDataStore"
@@ -59,6 +61,37 @@ object FusedLocationDataStore : LocationDataStore {
             Looper.getMainLooper()
         )
     }
+
+    @SuppressLint("MissingPermission")
+    override fun getLastLocation(): DeviceLocation {
+        var deviceLocation = DeviceLocation()
+
+        if (mPermissionExaminer?.hasAnyLocationPermissions == false) {
+            Timber.d("Cannot get last location as we don't have permission.")
+            return deviceLocation
+        }
+
+        try {
+            val lastLocationTask = mFusedLocationClient?.lastLocation
+            lastLocationTask?.let {
+                Tasks.await(
+                    it,
+                    2,
+                    TimeUnit.SECONDS
+                )
+            }
+            val lastLocationResult = lastLocationTask?.result
+
+            if (lastLocationResult != null) {
+                deviceLocation = DeviceLocation(location?.latitude ?: 0.0, location?.latitude ?: 0.0, location?.provider ?: "")
+            }
+        } catch (e: Exception) {
+            Timber.d(e)
+        }
+
+        return deviceLocation
+    }
+
     private fun createLocationRequest() = when (mPermissionExaminer?.hasFineLocationPermission) {
         true -> createSingleLocationRequestHighAccuracy()
         else -> createSingleLocationRequestBalancedPower()
@@ -82,7 +115,6 @@ object FusedLocationDataStore : LocationDataStore {
     }
 
     @SuppressLint("MissingPermission", "BinaryOperationInTimber")
-    @VisibleForTesting
     fun updateLastLocation() {
         Timber.d(
             "updateLastLocation() called" +
@@ -95,8 +127,8 @@ object FusedLocationDataStore : LocationDataStore {
         }
         try {
             val lastLocationTask =
-                mFusedLocationClient!!.lastLocation
-            lastLocationTask.addOnCompleteListener {
+                mFusedLocationClient?.lastLocation
+            lastLocationTask?.addOnCompleteListener {
                 if (lastLocationTask.isSuccessful) {
                     val location = lastLocationTask.result
                     if (location != null) {
