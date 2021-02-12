@@ -5,11 +5,11 @@ import androidx.room.*
 import com.mando.weatherforecast.model.CurrentResponse
 
 @Dao
-interface ForecastDao{
+interface ForecastDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCurrentForecast(currentResponse: CurrentResponse)
 
-    @Query("select * from currentResponse")
+    @Query("SELECT * FROM currentResponse ORDER BY id DESC LIMIT 1")
     fun getCurrentForecast(): LiveData<CurrentResponse>
 }

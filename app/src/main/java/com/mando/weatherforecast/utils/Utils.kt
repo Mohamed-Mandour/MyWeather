@@ -23,7 +23,7 @@ fun formatTime(formatter: SimpleDateFormat, timezone: String, time: Long): Strin
     return formatter.format(dateTime)
 }
 
-fun makeToast(message: CharSequence,context: Context, duration: Int = Toast.LENGTH_SHORT) {
+fun makeToast(message: CharSequence,context: Context, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(context, message, duration).show()
 }
 

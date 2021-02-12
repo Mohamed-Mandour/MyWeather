@@ -3,9 +3,9 @@ package com.mando.weatherforecast.repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mando.weatherforecast.location.DeviceLocation
+import com.mando.weatherforecast.base.db
+import com.mando.weatherforecast.database.ForecastDao
 import com.mando.weatherforecast.location.FusedLocationDataStore
-import com.mando.weatherforecast.location.LocationDataStore
 import com.mando.weatherforecast.model.CurrentResponse
 import com.mando.weatherforecast.model.ForecastResponse
 import com.mando.weatherforecast.model.HourlyResponse
@@ -14,12 +14,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
+import java.util.*
+import kotlin.concurrent.thread
 
 class ForecastRepositoryImpl(private val context: Context) : ForecastRepository {
 
     private val retrofitClient = RetrofitClient()
-
-    private val deviceLocation = FusedLocationDataStore.getLastLocation()
+    private val forecastDao: ForecastDao = db.forecastDao()
+    private val deviceLocation = FusedLocationDataStore.location
 
     override fun getCurrentForecast(): LiveData<CurrentResponse> {
         val data = MutableLiveData<CurrentResponse>()
@@ -91,4 +93,15 @@ class ForecastRepositoryImpl(private val context: Context) : ForecastRepository 
         })
         return data
     }
+
+    override fun saveCurrentForecast(currentResponse: CurrentResponse) {
+        thread {
+            forecastDao.insertCurrentForecast(currentResponse)
+        }
+    }
+
+    override fun getLatestCurrentForecast(): LiveData<CurrentResponse> {
+        return forecastDao.getCurrentForecast()
+    }
+
 }

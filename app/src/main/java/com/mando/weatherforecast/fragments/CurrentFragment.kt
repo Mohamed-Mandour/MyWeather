@@ -68,7 +68,7 @@ class CurrentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val spinnerView: LottieAnimationView = view.findViewById(R.id.spinner_animation_view)
+        val spinnerView: LottieAnimationView = view.findViewById(R.id.refreshAnimationView)
         val temperature = view.findViewById<TextView>(R.id.temp)
         if (temperature.text.isEmpty() || temperature.text == null) {
             spinnerView.visibility = View.VISIBLE
@@ -89,7 +89,14 @@ class CurrentFragment : Fragment() {
 
     private fun showCurrentWeather(viewModel: CurrentViewModel) {
         var time = 0L
-        viewModel.getCurrentForecast().observe(this, Observer { current ->
+        var timeZoneLocal = ""
+        viewModel.getTimeZone().observe(this, Observer { timeZone ->
+            locationTimeZone.text = timeZone
+            currentDay.text = formatTime(dailyDateFormatter, timeZone, time)
+            lastTimeUpdated.text = formatTime(hourlyDateFormatter, timeZone, time)
+            timeZoneLocal = timeZone
+        })
+        viewModel.getLatestCurrentForecast().observe( this, Observer { current ->
             currentSummary.text = current.summary
             precipitationValue.text = current.precipProbability.toString()
             temp.text = getTemperatureValue(current.temperature).toString()
@@ -100,12 +107,27 @@ class CurrentFragment : Fragment() {
             visibilityValue.text = current.visibility.toString()
             time = current.time
             iconWeather.setImageResource(iconUtils.getIconId(current.icon))
+            viewModel.saveCurrentForecast(current)
         })
 
-        viewModel.getTimeZone().observe(this, Observer { timeZone ->
-            locationTimeZone.text = timeZone
-            currentDay.text = formatTime(dailyDateFormatter, timeZone, time)
-            lastTimeUpdated.text = formatTime(hourlyDateFormatter, timeZone, time)
+        viewModel.getCurrentForecast().observe(this, Observer { current ->
+            current.timezone = timeZoneLocal
+            currentSummary.text = current.summary
+            precipitationValue.text = current.precipProbability.toString()
+            temp.text = getTemperatureValue(current.temperature).toString()
+            pressureValue.text = current.pressure.toString()
+            windValue.text = current.windSpeed.toString()
+            cloudCoverValue.text = current.cloudCover.toString()
+            humidityValue.text = current.humidity.toString()
+            visibilityValue.text = current.visibility.toString()
+            time = current.time
+            iconWeather.setImageResource(iconUtils.getIconId(current.icon))
+            viewModel.saveCurrentForecast(current)
+            refreshAnimationView.pauseAnimation()
+            refreshAnimationView.setOnClickListener {
+                viewModel.getCurrentForecast()
+                viewModel.getLatestCurrentForecast()
+            }
         })
     }
 }

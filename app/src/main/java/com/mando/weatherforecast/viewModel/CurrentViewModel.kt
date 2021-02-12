@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.mando.weatherforecast.model.CurrentResponse
 import com.mando.weatherforecast.repository.ForecastRepository
 import com.mando.weatherforecast.repository.ForecastRepositoryImpl
-import timber.log.Timber
 
 
 class CurrentViewModel(context: Context) : ViewModel() {
@@ -17,7 +16,15 @@ class CurrentViewModel(context: Context) : ViewModel() {
         return repository.getCurrentForecast()
     }
 
+    fun saveCurrentForecast(currentResponse: CurrentResponse){
+        return repository.saveCurrentForecast(currentResponse)
+    }
+
     fun getTimeZone(): LiveData<String> {
         return repository.getTimeZone()
+    }
+
+    fun getLatestCurrentForecast(): LiveData<CurrentResponse> {
+        return repository.getLatestCurrentForecast()
     }
 }

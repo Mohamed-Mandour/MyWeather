@@ -1,5 +1,6 @@
 package com.mando.weatherforecast.base
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.IntentFilter
 import android.content.pm.PackageManager
@@ -9,13 +10,18 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.*
 import com.mando.weatherforecast.R
 import com.mando.weatherforecast.adpater.MainActivityTabPagerAdapter
+import com.mando.weatherforecast.database.ForecastDao
+import com.mando.weatherforecast.location.DeviceLocation
 import com.mando.weatherforecast.location.FusedLocationDataStore
-import com.mando.weatherforecast.location.LocationDataStore
 import com.mando.weatherforecast.network.NetworkChangeReceiver
-import com.mando.weatherforecast.utils.*
-import com.mando.weatherforecast.viewModel.CurrentViewModel
+import com.mando.weatherforecast.network.RetrofitClient
+import com.mando.weatherforecast.utils.AndroidPermissionChecker
+import com.mando.weatherforecast.utils.NoConnectionDialog
+import com.mando.weatherforecast.utils.PermissionExaminer
+import com.mando.weatherforecast.utils.makeToast
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
@@ -26,22 +32,29 @@ private const val LOCATION_REQUEST_CODE = 99
 
 class MainActivity : AppCompatActivity(), NetworkChangeReceiver.ConnectivityReceiverListener {
 
-    private val locationDataStore: LocationDataStore?
-        get() = FusedLocationDataStore.getInstance(application)
-
+    private var mFusedLocationClient: FusedLocationDataStore? = null
+    private var receiver: NetworkChangeReceiver? =  null
+    private val forecastDao: ForecastDao = db.forecastDao()
+    private val retrofitClient = RetrofitClient()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        requestLocationPermission()
         setToolBar()
         setViewPager()
-        registerReceiver()
-
+        receiver = NetworkChangeReceiver()
+        mFusedLocationClient = FusedLocationDataStore.getInstance(applicationContext)
+        requestLocationPermission()
     }
 
     override fun onResume() {
         super.onResume()
         NetworkChangeReceiver.connectivityReceiverListener = this
+        registerReceiver(receiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(receiver)
     }
 
     private fun setToolBar() {
@@ -69,10 +82,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeReceiver.ConnectivityRece
         if (!hasAnyLocationPermissions) {
             makeLocationPermissionRequest()
         }
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            )
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
         ) {
             val dialog = createLocationRequestDialog()
             dialog?.show()
@@ -107,6 +117,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeReceiver.ConnectivityRece
         )
     }
 
+    @SuppressLint("MissingPermission")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -122,7 +133,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeReceiver.ConnectivityRece
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    locationDataStore?.location
+                     mFusedLocationClient?.requestLocationUpdates()
                 }
             }
         }
@@ -130,12 +141,6 @@ class MainActivity : AppCompatActivity(), NetworkChangeReceiver.ConnectivityRece
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
         showNetworkMessage(isConnected)
-    }
-    private fun registerReceiver() {
-        registerReceiver(
-            NetworkChangeReceiver(),
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        )
     }
 
     private fun showNetworkMessage(isConnected: Boolean) {

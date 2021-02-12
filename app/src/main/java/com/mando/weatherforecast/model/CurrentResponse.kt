@@ -1,5 +1,6 @@
 package com.mando.weatherforecast.model
 
+import androidx.annotation.Nullable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
@@ -14,8 +15,9 @@ data class CurrentResponse(
     var id: Long,
 
     @SerializedName("timezone")
+    @Nullable
     @Expose
-    var timezone: String,
+    var timezone: String?,
 
     @SerializedName("icon")
     @Expose
